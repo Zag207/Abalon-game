@@ -12,6 +12,6 @@ export enum CircleTypeEnum{
 export interface ICircleType{
     id: number,
     type: CircleTypeEnum,
-    coords: CircleCoordinates,
+    coords: ICircleCoordinates,
     isChecked: boolean,
 }
