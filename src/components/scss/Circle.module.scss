@@ -1,0 +1,17 @@
+$circleSize: 50px;
+$circleColorBlack: "black";
+$circleColorWhite: "white";
+
+.circle{
+    width: $circleSize;
+    height: $circleSize;
+    border-radius: 50%;
+}
+
+.circleBlack{
+    background-color: $circleColorBlack;
+}
+
+.circleWhite{
+    background-color: $circleColorWhite;
+}
