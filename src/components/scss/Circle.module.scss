@@ -1,6 +1,7 @@
 $circleSize: 50px;
-$circleColorBlack: "black";
-$circleColorWhite: "white";
+$circleColorBlack: black;
+$circleColorWhite: white;
+$circleColorChecked: fuchsia;
 
 .circle{
     width: $circleSize;
@@ -14,4 +15,8 @@ $circleColorWhite: "white";
 
 .circleWhite{
     background-color: $circleColorWhite;
+}
+
+.circleChecked{
+    background-color: $circleColorChecked;
 }
