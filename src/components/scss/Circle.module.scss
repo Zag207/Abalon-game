@@ -3,6 +3,8 @@ $circleColorBlack: black;
 $circleColorWhite: white;
 $circleColorChecked: fuchsia;
 
+$movingDelta: 50px;
+
 .circle{
     width: $circleSize;
     height: $circleSize;
@@ -19,4 +21,20 @@ $circleColorChecked: fuchsia;
 
 .circleChecked{
     background-color: $circleColorChecked;
+}
+
+.isMovingRight{
+    animation-name: rightMoving;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes rightMoving {
+    from{
+        transform: translateX(-$movingDelta);
+    }
+    to{
+        transform: translateX(0);
+    }
 }
