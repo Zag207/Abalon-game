@@ -1,12 +1,14 @@
 import React from "react"
 import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
 import classes from "./scss/Circle.module.scss"
+import MovingTypes from "../types/MovingTypes"
 
 interface CircleProps extends ICircleType{
+    moving: MovingTypes,
     updateCheckedCallback(id: number, value: boolean): void
 }
 
-const Circle:React.FC<CircleProps> = ({id, type, isChecked, updateCheckedCallback, ...props}) => {
+const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving, updateCheckedCallback, ...props}) => {
     let cssClass = classes.circle
     let cssClassTwo = ''
     
@@ -25,6 +27,17 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, updateCheckedCallbac
     else
     {
         cssClassTwo = classes.circleChecked
+    }
+
+    if(isMoving)
+    {
+        cssClass += ' '
+
+        switch (moving) {
+            case MovingTypes.Right:
+                cssClass += 'movingRight'
+                break;
+        }
     }
 
     cssClass += ' ' + cssClassTwo
