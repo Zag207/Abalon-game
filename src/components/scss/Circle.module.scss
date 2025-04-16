@@ -23,7 +23,7 @@ $movingDelta: 50px;
     background-color: $circleColorChecked;
 }
 
-.isMovingRight{
+.movingRight{
     animation-name: rightMoving;
     animation-timing-function: linear;
     animation-duration: 1s;
