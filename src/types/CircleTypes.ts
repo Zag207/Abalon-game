@@ -14,4 +14,5 @@ export interface ICircleType{
     type: CircleTypeEnum,
     coords: ICircleCoordinates,
     isChecked: boolean,
+    isMoving: boolean
 }
