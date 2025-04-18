@@ -1,82 +1,67 @@
-import { useState } from "react"
-import { CircleTypeEnum, ICircleType } from "./types/CircleTypes"
-import MovingTypes from "./types/MovingTypes"
 import HexagonLine from "./components/HexagonLine"
+import { useGameStore } from "./store/store";
+import MovingTypes from "./types/MovingTypes";
 
 function App() {
-  const prepareCircles = () => {
-      let line = 1
-      let diagonal = 1
+  const circles = useGameStore(state => state.circles)
+  const moving = useGameStore(state => state.moving)
 
+  const deleteCircle = useGameStore(state => state.deleteCircleById)
+  const changeMoving = useGameStore(state => state.setMoving)
+  const changeIsMoving = useGameStore(state => state.setMovingCircleById)
+  const changeCircleCoords = useGameStore(state => state.setCoordsById)
 
-  };
+  const deleteCircleHandler = () => {
+    const circle = circles.find(c => c.isChecked == true)
 
-  const [circles, setCircles] = useState<ICircleType[]>([
-  {
-    id: 1,
-    type: CircleTypeEnum.Black,
-    coords: {
-      line: 1,
-      diagonal: 5
-    },
-    isChecked: false,
-    isMoving: false
-  },
-  {
-    id: 2,
-    type: CircleTypeEnum.White,
-    coords: {
-      line: 1,
-      diagonal: 9
-    },
-    isChecked: false,
-    isMoving: false
-  }
-  ])
-  const [moving, setMoving] = useState<MovingTypes>(MovingTypes.NoMove)
-
-  const updateChecked = (id: number, value: boolean): void => {
-    const circle = circles.find(v => v.id == id)
-    
-    if(circle != undefined){
-      circle.isChecked = value
-      setCircles([...circles])
+    if (circle != undefined) {
+      deleteCircle(circle.id)
     }
   }
 
-  const moveRight = (): void => {
-    circles[0].coords.diagonal = circles[0].coords.diagonal + 1
-    circles[0].isMoving = true;
+  const moveRight = () => {
+    const circle = circles.find(c => c.isChecked == true)
 
-    setMoving(MovingTypes.Right)
-    setCircles(circles)
-  }
+    if (circle != undefined) {
+      const coords = circle.coords
+      coords.diagonal += 1
 
-  const moveLeft = (): void => {
-    circles[0].coords.diagonal = circles[0].coords.diagonal - 1
-    circles[0].isMoving = true;
-
-    setMoving(MovingTypes.Left)
-    setCircles(circles)
-  }
-
-  const clearMoving = (id: number): void => {
-    const circle = circles.find(v => v.id == id)
-    
-    if(circle != undefined){
-      circle.isMoving = false
-      setCircles([...circles])
+      changeMoving(MovingTypes.Right)
+      changeIsMoving(circle.id, true)
+      changeCircleCoords(circle.id, coords)
     }
-    setMoving(MovingTypes.NoMove)
+  }
+
+  const moveUpRight = () => {
+    const circle = circles.find(c => c.isChecked == true)
+
+    if (circle != undefined) {
+      const coords = circle.coords
+      coords.line -= 1
+      coords.diagonal += 1
+
+      changeMoving(MovingTypes.UpRight)
+      changeIsMoving(circle.id, true)
+      changeCircleCoords(circle.id, coords)
+    }
   }
 
   return (
     <>
       <div className="container" >
-        <HexagonLine startDiagonal={5} hexNumber={5} moving={moving} circles={circles} updateCheckedCallback={updateChecked} />
+        <HexagonLine startDiagonal={5} hexNumber={5} moving={moving} circles={circles.filter(circle => circle.coords.line == 1)} />
+        <HexagonLine startDiagonal={4} hexNumber={6} moving={moving} circles={circles.filter(circle => circle.coords.line == 2)} />
+        <HexagonLine startDiagonal={3} hexNumber={7} moving={moving} circles={circles.filter(circle => circle.coords.line == 3)} />
+        <HexagonLine startDiagonal={2} hexNumber={8} moving={moving} circles={circles.filter(circle => circle.coords.line == 4)} />
+        <HexagonLine startDiagonal={1} hexNumber={9} moving={moving} circles={circles.filter(circle => circle.coords.line == 5)} />
+        <HexagonLine startDiagonal={1} hexNumber={8} moving={moving} circles={circles.filter(circle => circle.coords.line == 6)} />
+        <HexagonLine startDiagonal={1} hexNumber={7} moving={moving} circles={circles.filter(circle => circle.coords.line == 7)} />
+        <HexagonLine startDiagonal={1} hexNumber={6} moving={moving} circles={circles.filter(circle => circle.coords.line == 8)} />
+        <HexagonLine startDiagonal={1} hexNumber={5} moving={moving} circles={circles.filter(circle => circle.coords.line == 9)} />
       </div>
       <button onClick={moveRight}>Move right</button>
-      <button onClick={moveLeft}>Move left</button>
+      <button onClick={moveUpRight}>Move upRight</button>
+      <button onClick={deleteCircleHandler}>Удалить фишку</button>
     </>
   )
 }

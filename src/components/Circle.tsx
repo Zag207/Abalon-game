@@ -2,16 +2,27 @@ import React from "react"
 import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
 import classes from "../scss/Circle.module.scss"
 import MovingTypes from "../types/MovingTypes"
+import { useGameStore } from "../store/store"
 
 interface CircleProps extends ICircleType{
     moving: MovingTypes,
-    updateCheckedCallback(id: number, value: boolean): void
 }
 
 //Не применяется класс movingRight при нажатии на кнопку, а сами анимации работают
-const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving, updateCheckedCallback, ...props}) => {
+const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving, ...props}) => {
     let cssClass = classes.circle
-    
+
+    const setIsChecked = useGameStore(state => state.setChecked)
+    const setIsMoved = useGameStore(state => state.setMovingCircleById)
+
+    const updateIsChecked = () => {
+        setIsChecked(id, !isChecked)
+    }
+    const clearIsMoving = () => {
+        setIsMoved(id, false)
+        updateIsChecked()
+    }
+
     if(!isChecked)
     {
         switch (type) 
@@ -59,7 +70,7 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving, up
     }
 
     return (
-        <div className={cssClass} onClick={() => updateCheckedCallback(id, !isChecked)}>
+        <div className={cssClass} onClick={updateIsChecked} onAnimationEnd={clearIsMoving}>
         </div>
     )
 };

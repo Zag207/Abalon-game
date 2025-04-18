@@ -58,7 +58,7 @@ $circleColorChecked: fuchsia;
 
 @keyframes upRightMoving {
     from{
-        transform: translate(10px, 10px);
+        transform: translate(calc(vars.$hex-width * -2 / 2 - vars.$hex-gap), calc(vars.$hex-width * 2 / 2 + vars.$hex-gap));
     }
     to{
         transform: translate(0, 0);

@@ -7,10 +7,9 @@ import classes from "../scss/Hexagon.module.scss"
 interface HexagonProps{
     circle?: ICircleType,
     moving: MovingTypes,
-    updateCheckedCallback(id: number, value: boolean): void,
 }
 
-const Hexagon:React.FC<HexagonProps> = ({circle, moving, updateCheckedCallback, ...props}) => {
+const Hexagon:React.FC<HexagonProps> = ({circle, moving, ...props}) => {
   return (
     <div className={classes.hexagonContainer}>
       <svg className={classes.hexagonSvg} viewBox="0 0 86.6 100">
@@ -21,14 +20,14 @@ const Hexagon:React.FC<HexagonProps> = ({circle, moving, updateCheckedCallback, 
         />
       </svg>
       {circle != undefined && <Circle id={circle.id} 
-                type={circle.type} 
-                coords={circle.coords} 
-                isChecked={circle.isChecked} 
-                isMoving={circle.isMoving} 
-                moving={moving} 
-                updateCheckedCallback={updateCheckedCallback} />}
+                                      type={circle.type} 
+                                      coords={circle.coords} 
+                                      isChecked={circle.isChecked} 
+                                      isMoving={circle.isMoving} 
+                                      moving={moving} />
+      }
     </div>
   )
-};
+}
 
 export default Hexagon;

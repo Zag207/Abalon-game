@@ -9,10 +9,9 @@ interface HexagonLineProps{
     hexNumber: number,
     moving: MovingTypes,
     circles: ICircleType[],
-    updateCheckedCallback(id: number, value: boolean): void
 }
 
-const HexagonLine:React.FC<HexagonLineProps> = ({circles, moving, startDiagonal, hexNumber, updateCheckedCallback, ...props}) => {
+const HexagonLine:React.FC<HexagonLineProps> = ({circles, moving, startDiagonal, hexNumber, ...props}) => {
     const circlesSorted = circles.sort((a, b) => a.coords.diagonal - b.coords.diagonal)
     const hexagonsI = [...Array(hexNumber)].map((_, i) => i + startDiagonal)
     const circlesSortedExtended = hexagonsI.map(v => {
@@ -22,7 +21,7 @@ const HexagonLine:React.FC<HexagonLineProps> = ({circles, moving, startDiagonal,
     return (
         <div className={classes.hexagonLine}>
             {circlesSortedExtended.map((circle, i) => (
-                <Hexagon key={i} circle={circle} moving={moving} updateCheckedCallback={updateCheckedCallback} />
+                <Hexagon key={i} circle={circle} moving={moving} />
             ))}
         </div>
     )

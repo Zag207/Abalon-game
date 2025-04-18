@@ -45,6 +45,7 @@ interface IGameStore{
     scoreBlack: number,
     scoreWhite: number,
 
+    deleteCircleById(id: Symbol): void,
     setCoordsById(id: Symbol, newCoords: ICircleCoordinates): void,
     setMovingCircleById(id: Symbol, movingValue: boolean): void,
     setChecked(id: Symbol, value: boolean): void,
@@ -59,6 +60,13 @@ export const useGameStore = create<IGameStore>((set, get) => ({
     scoreBlack: 0,
     scoreWhite: 0,
 
+    deleteCircleById: (id: Symbol): void => {
+        const circleIndex = get().circles.findIndex(v => v.id == id)
+
+        if(circleIndex != -1){
+            set({circles: [...get().circles.filter(circle => circle.id != id)]})
+        }
+    },
     setCoordsById: (id: Symbol, newCoords: ICircleCoordinates): void => {
         const circleIndex = get().circles.findIndex(v => v.id == id)
 
@@ -66,7 +74,7 @@ export const useGameStore = create<IGameStore>((set, get) => ({
             const circlesNew = get().circles
 
             circlesNew[circleIndex].coords = newCoords
-            set({circles: circlesNew})
+            set({circles: [...circlesNew]})
         }
     },
     setMovingCircleById: (id: Symbol, value: boolean): void => {
@@ -76,7 +84,7 @@ export const useGameStore = create<IGameStore>((set, get) => ({
             const circlesNew = get().circles
 
             circlesNew[circleIndex].isMoving = value
-            set({circles: circlesNew})
+            set({circles: [...circlesNew]})
         }
     },
     setChecked: (id: Symbol, value: boolean): void => {
@@ -86,7 +94,7 @@ export const useGameStore = create<IGameStore>((set, get) => ({
             const circlesNew = get().circles
 
             circlesNew[circleIndex].isChecked = value
-            set({circles: circlesNew})
+            set({circles: [...circlesNew]})
         }
     },
     setMoving: (value: MovingTypes): void => set({moving: value}),
