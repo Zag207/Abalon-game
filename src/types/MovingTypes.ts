@@ -3,7 +3,6 @@ enum MovingTypes{
     UpRight,
     Right,
     DownRight,
-    Down, 
     DownLeft,
     Left,
     UpLeft 

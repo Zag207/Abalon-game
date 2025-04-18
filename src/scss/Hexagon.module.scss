@@ -1,0 +1,19 @@
+@use "vars";
+
+:root{
+  --hex-color: #3498db;
+  --hex-border-width: 2px;
+}
+
+.hexagonContainer {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hexagonSvg {
+  height: vars.$hex-height;
+  width: vars.$hex-width;
+}

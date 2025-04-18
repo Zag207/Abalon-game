@@ -1,0 +1,111 @@
+@use "vars";
+
+$circleColorBlack: black;
+$circleColorWhite: white;
+$circleColorChecked: fuchsia;
+
+@mixin animation($keyframesName){
+    animation-name: $keyframesName;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+
+.circle{
+    width: calc(vars.$hex-height / 2);
+    height: calc(vars.$hex-height / 2);
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    z-index: 10;
+}
+
+.circleBlack{
+    background-color: $circleColorBlack;
+}
+
+.circleWhite{
+    background-color: $circleColorWhite;
+}
+
+.circleChecked{
+    background-color: $circleColorChecked;
+}
+
+.movingUpRight{
+    @include animation(upRightMoving);
+}
+
+.movingRight{
+    @include animation(rightMoving);
+}
+
+.movingDownRight{
+    @include animation(downRightMoving);
+}
+
+.movingDownLeft{
+    @include animation(downLeftMoving);
+}
+
+.movingLeft{
+    @include animation(leftMoving);
+}
+
+.movingUpLeft{
+    @include animation(upLeftMoving);
+}
+
+@keyframes upRightMoving {
+    from{
+        transform: translate(10px, 10px);
+    }
+    to{
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes rightMoving {
+    from{
+        transform: translate(calc(vars.$hex-width * -2 / 2 - vars.$hex-gap), 0);
+    }
+    to{
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes downRightMoving {
+    from{
+        transform: translate(10px, -10px);
+    }
+    to{
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes downLeftMoving {
+    from{
+        transform: translate(-10px, -10px);
+    }
+    to{
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes leftMoving {
+    from{
+        transform: translate(calc(vars.$hex-width * 2 / 2 + vars.$hex-gap), 0);
+    }
+    to{
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes upLeftMoving {
+    from{
+        transform: translate(-10px, 10px);
+    }
+    to{
+        transform: translate(0, 0);
+    }
+}
