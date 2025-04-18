@@ -9,7 +9,7 @@ export enum CircleTypeEnum{
 }
 
 export interface ICircleType{
-    id: number,
+    id: Symbol,
     type: CircleTypeEnum,
     coords: ICircleCoordinates,
     isChecked: boolean,
