@@ -12,10 +12,9 @@ interface HexagonLineProps{
 }
 
 const HexagonLine:React.FC<HexagonLineProps> = ({circles, moving, startDiagonal, hexNumber, ...props}) => {
-    const circlesSorted = circles.sort((a, b) => a.coords.diagonal - b.coords.diagonal)
     const hexagonsI = [...Array(hexNumber)].map((_, i) => i + startDiagonal)
     const circlesSortedExtended = hexagonsI.map(v => {
-        return circlesSorted.find(el => el.coords.diagonal == v)
+        return circles.find(el => el.coords.diagonal == v)
     })
 
     return (

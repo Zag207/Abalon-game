@@ -1,6 +1,6 @@
 export interface ICircleCoordinates{
     line: number,
-    diagonal: number
+    diagonal: number,
 }
 
 export enum CircleTypeEnum{

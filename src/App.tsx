@@ -1,6 +1,7 @@
 import HexagonLine from "./components/HexagonLine"
-import { useGameStore } from "./store/store";
-import MovingTypes from "./types/MovingTypes";
+import { useGameStore } from "./store/store"
+import { ICircleCoordinates } from "./types/CircleTypes"
+import MovingTypes from "./types/MovingTypes"
 
 function App() {
   const circles = useGameStore(state => state.circles)
@@ -19,28 +20,51 @@ function App() {
     }
   }
 
-  const moveRight = () => {
-    const circle = circles.find(c => c.isChecked == true)
+  const updateCoords = (coords: ICircleCoordinates, deltaLine: number, deltaDiagonal: number): ICircleCoordinates => {
+    coords.line += deltaLine
+    coords.diagonal += deltaDiagonal
 
-    if (circle != undefined) {
-      const coords = circle.coords
-      coords.diagonal += 1
-
-      changeMoving(MovingTypes.Right)
-      changeIsMoving(circle.id, true)
-      changeCircleCoords(circle.id, coords)
-    }
+    return coords
   }
 
-  const moveUpRight = () => {
+  const getCircleDeltaCoords = (moveType: MovingTypes): ICircleCoordinates => {
+    let deltaLine = 0
+      let deltaDiagonal = 0
+
+      switch (moveType) {
+        case MovingTypes.UpRight:
+          deltaLine = -1
+          deltaDiagonal = 1
+          break;
+        case MovingTypes.Right:
+          deltaDiagonal = 1
+          break;
+        case MovingTypes.DownRight:
+          deltaLine = 1
+          break;
+        case MovingTypes.DownLeft:
+          deltaLine = 1
+          deltaDiagonal = -1
+          break;
+        case MovingTypes.Left:
+          deltaDiagonal = -1
+          break;
+        case MovingTypes.UpLeft:
+          deltaLine = -1
+          break;
+      }
+
+      return {line: deltaLine, diagonal: deltaDiagonal}
+  }
+
+  const move = (moveType: MovingTypes) => {
     const circle = circles.find(c => c.isChecked == true)
 
     if (circle != undefined) {
-      const coords = circle.coords
-      coords.line -= 1
-      coords.diagonal += 1
+      const {line, diagonal} = getCircleDeltaCoords(moveType)
 
-      changeMoving(MovingTypes.UpRight)
+      const coords = updateCoords(circle.coords, line, diagonal)
+      changeMoving(moveType)
       changeIsMoving(circle.id, true)
       changeCircleCoords(circle.id, coords)
     }
@@ -59,8 +83,10 @@ function App() {
         <HexagonLine startDiagonal={1} hexNumber={6} moving={moving} circles={circles.filter(circle => circle.coords.line == 8)} />
         <HexagonLine startDiagonal={1} hexNumber={5} moving={moving} circles={circles.filter(circle => circle.coords.line == 9)} />
       </div>
-      <button onClick={moveRight}>Move right</button>
-      <button onClick={moveUpRight}>Move upRight</button>
+      <button onClick={() => move(MovingTypes.Right)}>Move right</button>
+      <button onClick={() => move(MovingTypes.UpRight)}>Move upRight</button>
+      <button onClick={() => move(MovingTypes.Left)}>Move left</button>
+      <button onClick={() => move(MovingTypes.UpLeft)}>Move upLeft</button>
       <button onClick={deleteCircleHandler}>Удалить фишку</button>
     </>
   )

@@ -7,8 +7,12 @@ $circleColorChecked: fuchsia;
 @mixin animation($keyframesName){
     animation-name: $keyframesName;
     animation-timing-function: linear;
-    animation-duration: 2s;
+    animation-duration: 1s;
     animation-iteration-count: 1;
+}
+
+@mixin translation($directionX, $directionY){
+    transform: translate(calc((vars.$hex-width + vars.$hex-gap) / 2 * $directionX), calc((vars.$hex-height - vars.$hex-gap) * $directionY));
 }
 
 .circle{
@@ -58,7 +62,8 @@ $circleColorChecked: fuchsia;
 
 @keyframes upRightMoving {
     from{
-        transform: translate(calc(vars.$hex-width * -2 / 2 - vars.$hex-gap), calc(vars.$hex-width * 2 / 2 + vars.$hex-gap));
+        // transform: translate(calc((vars.$hex-width + vars.$hex-gap) / -2), calc(vars.$hex-height - vars.$hex-gap));
+        @include translation(-1, 1);
     }
     to{
         transform: translate(0, 0);
@@ -67,7 +72,8 @@ $circleColorChecked: fuchsia;
 
 @keyframes rightMoving {
     from{
-        transform: translate(calc(vars.$hex-width * -2 / 2 - vars.$hex-gap), 0);
+        // transform: translate(calc((vars.$hex-width + vars.$hex-gap) * -1), 0);
+        @include translation(-2, 0);
     }
     to{
         transform: translate(0, 0);
@@ -76,7 +82,7 @@ $circleColorChecked: fuchsia;
 
 @keyframes downRightMoving {
     from{
-        transform: translate(10px, -10px);
+        @include translation(-1, -1);
     }
     to{
         transform: translate(0, 0);
@@ -85,7 +91,7 @@ $circleColorChecked: fuchsia;
 
 @keyframes downLeftMoving {
     from{
-        transform: translate(-10px, -10px);
+        @include translation(1, -1);
     }
     to{
         transform: translate(0, 0);
@@ -94,7 +100,7 @@ $circleColorChecked: fuchsia;
 
 @keyframes leftMoving {
     from{
-        transform: translate(calc(vars.$hex-width * 2 / 2 + vars.$hex-gap), 0);
+        @include translation(2, 0);
     }
     to{
         transform: translate(0, 0);
@@ -103,7 +109,7 @@ $circleColorChecked: fuchsia;
 
 @keyframes upLeftMoving {
     from{
-        transform: translate(-10px, 10px);
+        @include translation(1, 1);
     }
     to{
         transform: translate(0, 0);
