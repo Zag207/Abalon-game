@@ -1,0 +1,28 @@
+$size: 40px;
+$positions: 6;
+
+.controls{
+    width: 500px;
+    height: 500px;
+    position: relative;
+}
+
+.arrowContainer{
+    height: $size;
+    width: $size;
+
+    svg{
+        display: inline-block;
+        cursor: pointer;
+        fill: #337AB7;
+    }
+
+
+}
+
+@for $i from 1 to $positions{
+    .rotate-#{$i}{
+        transform: rotate(calc((($i - 0.5) * 60 - 90) * 1deg));
+    }
+}
+

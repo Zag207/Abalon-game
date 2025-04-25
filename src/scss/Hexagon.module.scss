@@ -1,10 +1,5 @@
 @use "vars";
 
-:root{
-  --hex-color: #3498db;
-  --hex-border-width: 2px;
-}
-
 .hexagonContainer {
   box-sizing: border-box;
   position: relative;
@@ -16,4 +11,5 @@
 .hexagonSvg {
   height: vars.$hex-height;
   width: vars.$hex-width;
+  fiLL: #3498db;
 }

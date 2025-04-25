@@ -13,11 +13,7 @@ const Hexagon:React.FC<HexagonProps> = ({circle, moving, ...props}) => {
   return (
     <div className={classes.hexagonContainer}>
       <svg className={classes.hexagonSvg} viewBox="0 0 86.6 100">
-        <polygon 
-            points="43.3 0, 86.6 25, 86.6 75, 43.3 100, 0 75, 0 25"
-            fill="var(--hex-color)"
-            strokeWidth="var(--hex-border-width)"
-        />
+        <polygon points="43.3 0, 86.6 25, 86.6 75, 43.3 100, 0 75, 0 25" />
       </svg>
       {circle != undefined && <Circle id={circle.id} 
                                       type={circle.type} 

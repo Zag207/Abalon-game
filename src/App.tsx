@@ -1,3 +1,5 @@
+import ButtonArrow from "./components/ButtonArrow"
+import Controls from "./components/Controls"
 import HexagonLine from "./components/HexagonLine"
 import { useGameStore } from "./store/store"
 import { ICircleCoordinates } from "./types/CircleTypes"
@@ -88,6 +90,7 @@ function App() {
       <button onClick={() => move(MovingTypes.Left)}>Move left</button>
       <button onClick={() => move(MovingTypes.UpLeft)}>Move upLeft</button>
       <button onClick={deleteCircleHandler}>Удалить фишку</button>
+      <Controls buttonCount={6}  />
     </>
   )
 }
