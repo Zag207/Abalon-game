@@ -52,6 +52,8 @@ interface IGameStore{
     setMoving(value: MovingTypes): void,
     increaseScoreBlack(): void,
     increaseScoreWhite(): void,
+    getChechedCount(): number,
+    canICheckCircles(): boolean,
 }
 
 export const useGameStore = create<IGameStore>((set, get) => ({
@@ -100,4 +102,6 @@ export const useGameStore = create<IGameStore>((set, get) => ({
     setMoving: (value: MovingTypes): void => set({moving: value}),
     increaseScoreBlack: (): void => set({scoreBlack: get().scoreBlack + 1}),
     increaseScoreWhite: (): void => set({scoreWhite: get().scoreWhite + 1}),
+    getChechedCount: (): number => get().circles.filter(circle => circle.isChecked).length,
+    canICheckCircles: (): boolean => get().circles.filter(circle => circle.isChecked).length < 3,
 }))

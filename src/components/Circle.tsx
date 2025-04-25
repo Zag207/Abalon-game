@@ -14,9 +14,13 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) =
 
     const setIsChecked = useGameStore(state => state.setChecked)
     const setIsMoved = useGameStore(state => state.setMovingCircleById)
+    const canICheckCircle = useGameStore(state => state.canICheckCircles)
 
     const updateIsChecked = () => {
-        setIsChecked(id, !isChecked)
+        const isToChecked = !isChecked
+
+        if(isToChecked && canICheckCircle() || !isToChecked)
+            setIsChecked(id, isToChecked)
     }
     const clearIsMoving = () => {
         setIsMoved(id, false)
@@ -42,7 +46,6 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) =
 
     if(isMoving)
     {
-        console.log("В isMoving")
         cssClass += ' '
 
         switch (moving) {
