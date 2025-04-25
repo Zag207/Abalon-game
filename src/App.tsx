@@ -1,13 +1,12 @@
-import Controls from "./components/Controls"
-import HexagonLine from "./components/HexagonLine"
 import { useGameStore } from "./store/store"
 import { ICircleCoordinates } from "./types/CircleTypes"
 import MovingTypes from "./types/MovingTypes"
 import classes from "./scss/Game.module.scss"
+import Board from "./components/Board"
+import Controls from "./components/Controls"
 
 function App() {
   const circles = useGameStore(state => state.circles)
-  const moving = useGameStore(state => state.moving)
   const movingMap: Map<number, MovingTypes> = new Map([
     [1, MovingTypes.UpRight],
     [2, MovingTypes.Right],
@@ -92,17 +91,7 @@ function App() {
   return (
     <div className={classes.game}>
       <div className={classes.board} >
-        <div>
-          <HexagonLine startDiagonal={5} hexNumber={5} moving={moving} circles={circles.filter(circle => circle.coords.line == 1)} />
-          <HexagonLine startDiagonal={4} hexNumber={6} moving={moving} circles={circles.filter(circle => circle.coords.line == 2)} />
-          <HexagonLine startDiagonal={3} hexNumber={7} moving={moving} circles={circles.filter(circle => circle.coords.line == 3)} />
-          <HexagonLine startDiagonal={2} hexNumber={8} moving={moving} circles={circles.filter(circle => circle.coords.line == 4)} />
-          <HexagonLine startDiagonal={1} hexNumber={9} moving={moving} circles={circles.filter(circle => circle.coords.line == 5)} />
-          <HexagonLine startDiagonal={1} hexNumber={8} moving={moving} circles={circles.filter(circle => circle.coords.line == 6)} />
-          <HexagonLine startDiagonal={1} hexNumber={7} moving={moving} circles={circles.filter(circle => circle.coords.line == 7)} />
-          <HexagonLine startDiagonal={1} hexNumber={6} moving={moving} circles={circles.filter(circle => circle.coords.line == 8)} />
-          <HexagonLine startDiagonal={1} hexNumber={5} moving={moving} circles={circles.filter(circle => circle.coords.line == 9)} />
-        </div>
+        <Board />
       </div>
       <div className={classes.controls}>
         <Controls createMovingFunctionCallback={createMove} />
