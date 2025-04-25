@@ -11,7 +11,7 @@ interface HexagonLineProps{
     circles: ICircleType[],
 }
 
-const HexagonLine:React.FC<HexagonLineProps> = ({circles, moving, startDiagonal, hexNumber, ...props}) => {
+const HexagonLine:React.FC<HexagonLineProps> = ({circles, moving, startDiagonal, hexNumber}) => {
     const hexagonsI = [...Array(hexNumber)].map((_, i) => i + startDiagonal)
     const circlesSortedExtended = hexagonsI.map(v => {
         return circles.find(el => el.coords.diagonal == v)

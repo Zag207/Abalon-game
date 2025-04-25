@@ -9,7 +9,7 @@ interface CircleProps extends ICircleType{
 }
 
 //Не применяется класс movingRight при нажатии на кнопку, а сами анимации работают
-const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving, ...props}) => {
+const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) => {
     let cssClass = classes.circle
 
     const setIsChecked = useGameStore(state => state.setChecked)

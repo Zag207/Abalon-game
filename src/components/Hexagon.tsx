@@ -9,7 +9,7 @@ interface HexagonProps{
     moving: MovingTypes,
 }
 
-const Hexagon:React.FC<HexagonProps> = ({circle, moving, ...props}) => {
+const Hexagon:React.FC<HexagonProps> = ({circle, moving}) => {
   return (
     <div className={classes.hexagonContainer}>
       <svg className={classes.hexagonSvg} viewBox="0 0 86.6 100">
