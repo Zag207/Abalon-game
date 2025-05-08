@@ -1,7 +1,7 @@
 import React from "react"
 import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
 import classes from "../scss/Circle.module.scss"
-import MovingTypes from "../types/MovingTypes"
+import {MovingTypes} from "../types/MovingTypes"
 import { useGameStore } from "../store/store"
 
 interface CircleProps extends ICircleType{
@@ -11,6 +11,12 @@ interface CircleProps extends ICircleType{
 //Не применяется класс movingRight при нажатии на кнопку, а сами анимации работают
 const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) => {
     let cssClass = classes.circle
+
+    const currentTeam = useGameStore(state => state.team)
+
+    if(isChecked)
+        console.log(`moving=${moving} isMoving=${isMoving}`)
+    
 
     const setIsChecked = useGameStore(state => state.setChecked)
     const setIsMoved = useGameStore(state => state.setMovingCircleById)
@@ -73,7 +79,7 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) =
     }
 
     return (
-        <div className={cssClass} onClick={updateIsChecked} onAnimationEnd={clearIsMoving}>
+        <div className={cssClass} onClick={currentTeam == type ? updateIsChecked : undefined} onAnimationEnd={clearIsMoving}>
         </div>
     )
 };
