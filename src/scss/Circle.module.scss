@@ -1,8 +1,8 @@
 @use "vars";
 
 $circleColorBlack: black;
-$circleColorWhite: /* white */#FFFFF0;
-$circleColorChecked: /* fuchsia */#FFDF00;
+$circleColorWhite: #FFFFF0;
+$circleColorChecked: #FFDF00;
 
 @mixin animation($keyframesName){
     animation-name: $keyframesName;
@@ -34,6 +34,11 @@ $circleColorChecked: /* fuchsia */#FFDF00;
 
 .circleChecked{
     background-color: $circleColorChecked;
+}
+
+.circleError {
+    animation: shake 0.7s ease-in-out;
+    background-color: #ff6e6e;
 }
 
 .movingUpRight{
@@ -114,4 +119,10 @@ $circleColorChecked: /* fuchsia */#FFDF00;
     to{
         transform: translate(0, 0);
     }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
 }

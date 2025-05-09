@@ -13,12 +13,13 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) =
     let cssClass = classes.circle
 
     const currentTeam = useGameStore(state => state.team)
+    const isError = useGameStore(state => state.isErrorMove)
 
     if(isChecked)
         console.log(`moving=${moving} isMoving=${isMoving}`)
-    
 
     const setIsChecked = useGameStore(state => state.setChecked)
+    const setIsError = useGameStore(state => state.setIsErrorMove)
     const setIsMoved = useGameStore(state => state.setMovingCircleById)
     const canICheckCircle = useGameStore(state => state.canICheckCircles)
 
@@ -31,6 +32,18 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) =
     const clearIsMoving = () => {
         setIsMoved(id, false)
         setIsChecked(id, false)
+    }
+    const clearError = () => {
+        const indexError = cssClass.indexOf(` ${classes.circleError}`)
+
+        if(indexError > -1)
+        {
+            const left = cssClass.slice(indexError, indexError + ` ${classes.circleError}`.length)
+            const right = cssClass.slice(indexError + ` ${classes.circleError}`.length)
+            
+            cssClass = left + right
+            setIsError(false)
+        }
     }
 
     if(!isChecked)
@@ -78,8 +91,11 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) =
         }
     }
 
+    if(isError && isChecked)
+        cssClass += ' ' + classes.circleError
+
     return (
-        <div className={cssClass} onClick={currentTeam == type ? updateIsChecked : undefined} onAnimationEnd={clearIsMoving}>
+        <div className={cssClass} onClick={currentTeam == type ? updateIsChecked : undefined} onAnimationEnd={isMoving ? clearIsMoving : clearError}>
         </div>
     )
 };
