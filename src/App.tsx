@@ -6,6 +6,8 @@ import Board from "./components/Board"
 import Controls from "./components/Controls"
 import GameInfo from "./components/GameInfo"
 import { useEffect } from "react"
+import MyModal from "./components/UI/MyModal"
+import WinNotification from "./components/WinNotification"
 
 function App() {
   const circles = useGameStore(state => state.circles)
@@ -18,7 +20,9 @@ function App() {
     [5, MovingTypes.Left],
     [6, MovingTypes.UpLeft]
   ])
-
+  
+  const getWinnerTeam = useGameStore(state => state.getWinnerTeam)
+  const getIsWin = useGameStore(state => state.isWin)
   const changeMoving = useGameStore(state => state.setMoving)
   const setCircles = useGameStore(state => state.setCircles)
   const changeTeam = useGameStore(state => state.changeTeam)
@@ -293,6 +297,9 @@ function App() {
 
   return (
     <div className={classes.game}>
+      <MyModal isVisible={getIsWin()}>
+        <WinNotification winnerTeam={getWinnerTeam()} />
+      </MyModal>
       <div className={classes.board} >
         <Board />
       </div>

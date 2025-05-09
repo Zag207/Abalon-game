@@ -47,7 +47,7 @@ interface IGameStore{
     team: CircleTypeEnum,
     isErrorMove: boolean,
 
-    deleteCircleById(id: Symbol): void,
+    isWin(): boolean,
     setCircles(circles: ICircleType[]): void,
     setMovingCircleById(id: Symbol, movingValue: boolean): void,
     setChecked(id: Symbol, value: boolean): void,
@@ -58,6 +58,7 @@ interface IGameStore{
     changeTeam(): void,
     clearIsChecked(): void,
     setIsErrorMove(value: boolean): void,
+    getWinnerTeam(): CircleTypeEnum,
 }
 
 export const useGameStore = create<IGameStore>((set, get) => ({
@@ -68,13 +69,17 @@ export const useGameStore = create<IGameStore>((set, get) => ({
     team: CircleTypeEnum.White,
     isErrorMove: false,
 
-    deleteCircleById: (id: Symbol): void => {
-        const circleIndex = get().circles.findIndex(v => v.id == id)
-
-        if(circleIndex != -1){
-            set({circles: [...get().circles.filter(circle => circle.id != id)]})
+    getWinnerTeam: (): CircleTypeEnum => {
+        if (get().scoreBlack >= 6) 
+        {
+            return CircleTypeEnum.Black
+        }
+        else
+        {
+            return CircleTypeEnum.White
         }
     },
+    isWin: (): boolean => get().scoreBlack >= 6 || get().scoreWhite >= 6,
     setCircles: (circlesNew: ICircleType[]): void => set({circles: [...circlesNew]}),
     setMovingCircleById: (id: Symbol, value: boolean): void => {
         const circleIndex = get().circles.findIndex(v => v.id == id)
