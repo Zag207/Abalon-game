@@ -1,0 +1,38 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.game{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3fr 1fr;
+}
+
+.board{
+    grid-column-start: 1;
+    grid-row: 1 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 200"><polygon points="230,100 172.5,200 57.5,200 0,100 57.5,0 172.5,0" fill="%236f2503"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.controls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column-start: 2;
+    grid-row: 1 / 2;
+}
+
+.game-info{
+    grid-column-start: 2;
+    grid-row-start: 2;
+    background-color: #d1af34;
+    margin: 10px;
+    border-radius: 8px;
+}
