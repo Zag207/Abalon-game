@@ -1,6 +1,7 @@
 import React from "react"
 import { useGameStore } from "../store/store";
 import HexagonLine from "./HexagonLine";
+import classes from "../scss/Board.module.scss"
 
 interface BoardProps{}
 
@@ -9,7 +10,7 @@ const Board:React.FC<BoardProps> = ({}) => {
     const moving = useGameStore(state => state.moving)
 
     return (
-        <div>
+        <div className={classes.board}>
             <HexagonLine startDiagonal={5} hexNumber={5} moving={moving} circles={circles.filter(circle => circle.coords.line == 1)} />
             <HexagonLine startDiagonal={4} hexNumber={6} moving={moving} circles={circles.filter(circle => circle.coords.line == 2)} />
             <HexagonLine startDiagonal={3} hexNumber={7} moving={moving} circles={circles.filter(circle => circle.coords.line == 3)} />

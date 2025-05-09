@@ -1,9 +1,10 @@
 import { useGameStore } from "./store/store"
 import { CircleTypeEnum, ICircleCoordinates, ICircleType } from "./types/CircleTypes"
 import { MovingTypes, MovingTypes1 } from "./types/MovingTypes"
-import classes from "./scss/Game.module.scss"
+import classes from "./scss/App.module.scss"
 import Board from "./components/Board"
 import Controls from "./components/Controls"
+import GameInfo from "./components/GameInfo"
 import { useEffect } from "react"
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
     [5, MovingTypes.Left],
     [6, MovingTypes.UpLeft]
   ])
-  
+
   const changeMoving = useGameStore(state => state.setMoving)
   const setCircles = useGameStore(state => state.setCircles)
   const changeTeam = useGameStore(state => state.changeTeam)
@@ -113,7 +114,8 @@ function App() {
     const isOneDiagonal = circlesChecked.reduce((acc, el) => acc && el.coords.diagonal == diagonal, true)
     
     const sortedCircledChecked = circlesChecked.sort((a, b) => getDistance(a.coords, b.coords))
-
+    console.log(sortedCircledChecked.map(c => c.coords));
+    
     const initRes = {
       res: true,
       prevCoords: {
@@ -298,7 +300,7 @@ function App() {
         <Controls createMovingFunctionCallback={createMove} />
       </div>
       <div className={classes["game-info"]}>
-        {team == CircleTypeEnum.Black ? "Black" : "White"}
+        <GameInfo />
       </div>
     </div>
   )

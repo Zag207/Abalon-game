@@ -15,7 +15,10 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 200"><polygon points="230,100 172.5,200 57.5,200 0,100 57.5,0 172.5,0" fill="%236f2503"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .controls{
@@ -29,4 +32,7 @@ body{
 .game-info{
     grid-column-start: 2;
     grid-row-start: 2;
+    background-color: #d1af34;
+    margin: 10px;
+    border-radius: 8px;
 }
