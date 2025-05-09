@@ -1,5 +1,5 @@
 import { create }  from "zustand"
-import { CircleTypeEnum, ICircleCoordinates, ICircleType } from "../types/CircleTypes"
+import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
 import {MovingTypes} from "../types/MovingTypes"
 
 const prepareCirclesLine = (line: number, startDiagonal: number, circlesCount: number, type: CircleTypeEnum): ICircleType[] => {
@@ -115,7 +115,7 @@ export const useGameStore = create<IGameStore>((set, get) => ({
     getChechedCount: (): number => get().circles.filter(circle => circle.isChecked).length,
     canICheckCircles: (): boolean => get().circles.filter(circle => circle.isChecked).length < 3,
     changeTeam: (): void => {
-        let currentTeam = get().team
+        const currentTeam = get().team
 
         if (currentTeam == CircleTypeEnum.White) {
             set({team: CircleTypeEnum.Black})
