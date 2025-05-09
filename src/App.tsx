@@ -117,7 +117,7 @@ function App() {
     const isOneLine = circlesChecked.reduce((acc, el) => acc && el.coords.line == line, true)
     const isOneDiagonal = circlesChecked.reduce((acc, el) => acc && el.coords.diagonal == diagonal, true)
     
-    const sortedCircledChecked = circlesChecked.sort((a, b) => getDistance(a.coords, b.coords))
+    let sortedCircledChecked = circlesChecked.sort((a, b) => a.coords.diagonal - b.coords.diagonal)
     console.log(sortedCircledChecked.map(c => c.coords));
     
     const initRes = {
@@ -149,6 +149,7 @@ function App() {
     }, true)
 
     // Проверка, находятся ли фишки рядом
+    sortedCircledChecked = circlesChecked.sort((a, b) => getDistance(a.coords, b.coords))
     res = res && sortedCircledChecked.reduce((acc, item) => {
       const status = getDistance(acc.prevCoords, item.coords) <= 1
 
