@@ -1,0 +1,47 @@
+@use "sass:math";
+
+$sizeArrow: 40px;
+$paddingArrow: 150%;
+
+$size1: calc(100% * math.cos(30deg));
+
+.controls{
+    min-width: 260px;
+    height: calc(60% * math.cos(30deg));
+    position: relative;
+}
+
+.el{
+    display: inline-block;
+    position: absolute;
+}
+
+.abs1{
+    top: 0;
+    right: calc($size1 - $paddingArrow * math.cos(60deg) + $sizeArrow / 2);
+}
+
+.abs2{
+    top: calc(50% - $sizeArrow / 2);
+    right: 0;
+}
+
+.abs3{
+    bottom: 0;
+    right: calc($size1 - $paddingArrow * math.cos(60deg) + $sizeArrow / 2);
+}
+
+.abs4{
+    bottom: 0;
+    left: calc($size1 - $paddingArrow * math.cos(60deg) + $sizeArrow / 2);
+}
+
+.abs5{
+    top: calc(50% - $sizeArrow / 2);
+    left: 0;
+}
+
+.abs6{
+    top: 0;
+    left: calc($size1 - $paddingArrow * math.cos(60deg) + $sizeArrow / 2);
+}

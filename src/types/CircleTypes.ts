@@ -1,7 +1,6 @@
 export interface ICircleCoordinates{
     line: number,
-    upDiagonal: number,
-    downDiagonal: number
+    diagonal: number,
 }
 
 export enum CircleTypeEnum{
@@ -10,8 +9,9 @@ export enum CircleTypeEnum{
 }
 
 export interface ICircleType{
-    id: number,
+    id: Symbol,
     type: CircleTypeEnum,
     coords: ICircleCoordinates,
     isChecked: boolean,
+    isMoving: boolean
 }

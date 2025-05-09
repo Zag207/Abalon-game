@@ -1,37 +1,101 @@
 import React from "react"
 import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
-import classes from "./scss/Circle.module.scss"
+import classes from "../scss/Circle.module.scss"
+import {MovingTypes} from "../types/MovingTypes"
+import { useGameStore } from "../store/store"
 
 interface CircleProps extends ICircleType{
-    updateCheckedCallback(id: number, value: boolean): void
+    moving: MovingTypes,
 }
 
-const Circle:React.FC<CircleProps> = ({id, type, isChecked, updateCheckedCallback, ...props}) => {
+//Не применяется класс movingRight при нажатии на кнопку, а сами анимации работают
+const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) => {
     let cssClass = classes.circle
-    let cssClassTwo = ''
-    
+
+    const currentTeam = useGameStore(state => state.team)
+    const isError = useGameStore(state => state.isErrorMove)
+
+    if(isChecked)
+        console.log(`moving=${moving} isMoving=${isMoving}`)
+
+    const setIsChecked = useGameStore(state => state.setChecked)
+    const setIsError = useGameStore(state => state.setIsErrorMove)
+    const setIsMoved = useGameStore(state => state.setMovingCircleById)
+    const canICheckCircle = useGameStore(state => state.canICheckCircles)
+
+    const updateIsChecked = () => {
+        const isToChecked = !isChecked
+
+        if(isToChecked && canICheckCircle() || !isToChecked)
+            setIsChecked(id, isToChecked)
+    }
+    const clearIsMoving = () => {
+        setIsMoved(id, false)
+        setIsChecked(id, false)
+    }
+    const clearError = () => {
+        const indexError = cssClass.indexOf(` ${classes.circleError}`)
+
+        if(indexError > -1)
+        {
+            const left = cssClass.slice(indexError, indexError + ` ${classes.circleError}`.length)
+            const right = cssClass.slice(indexError + ` ${classes.circleError}`.length)
+            
+            cssClass = left + right
+            setIsError(false)
+        }
+    }
+
     if(!isChecked)
     {
         switch (type) 
         {
             case CircleTypeEnum.Black:
-                cssClassTwo = classes.circleBlack
+                cssClass += ' ' + classes.circleBlack
                 break;
             case CircleTypeEnum.White:
-                cssClassTwo = classes.circleWhite
+                cssClass += ' ' + classes.circleWhite
                 break;
         }
     }
     else
     {
-        cssClassTwo = classes.circleChecked
+        cssClass += ' ' + classes.circleChecked
     }
 
-    cssClass += ' ' + cssClassTwo
+    if(isMoving)
+    {
+        cssClass += ' '
+
+        switch (moving) {
+            case MovingTypes.UpRight:
+                cssClass += ' ' + classes.movingUpRight
+                break;
+            case MovingTypes.Right:
+                cssClass += ' ' + classes.movingRight
+                break;
+            case MovingTypes.DownRight:
+                cssClass += ' ' + classes.movingDownRight
+                break;
+            case MovingTypes.DownLeft:
+                cssClass += ' ' + classes.movingDownLeft
+                break;
+            case MovingTypes.Left:
+                cssClass += ' ' + classes.movingLeft
+                break;
+            case MovingTypes.UpLeft:
+                cssClass += ' ' + classes.movingUpLeft
+                break;
+            default:
+                break;
+        }
+    }
+
+    if(isError && isChecked)
+        cssClass += ' ' + classes.circleError
 
     return (
-        <div className={cssClass} onClick={() => updateCheckedCallback(id, !isChecked)}>
-        
+        <div className={cssClass} onClick={currentTeam == type ? updateIsChecked : undefined} onAnimationEnd={isMoving ? clearIsMoving : clearError}>
         </div>
     )
 };
