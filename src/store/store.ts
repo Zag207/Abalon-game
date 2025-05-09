@@ -48,13 +48,11 @@ interface IGameStore{
     isErrorMove: boolean,
 
     deleteCircleById(id: Symbol): void,
-    setCoordsById(id: Symbol, newCoords: ICircleCoordinates): void,
     setCircles(circles: ICircleType[]): void,
     setMovingCircleById(id: Symbol, movingValue: boolean): void,
     setChecked(id: Symbol, value: boolean): void,
     setMoving(value: MovingTypes): void,
-    increaseScoreBlack(): void,
-    increaseScoreWhite(): void,
+    increaseScore(team: CircleTypeEnum): void,
     getChechedCount(): number,
     canICheckCircles(): boolean,
     changeTeam(): void,
@@ -78,16 +76,6 @@ export const useGameStore = create<IGameStore>((set, get) => ({
         }
     },
     setCircles: (circlesNew: ICircleType[]): void => set({circles: [...circlesNew]}),
-    setCoordsById: (id: Symbol, newCoords: ICircleCoordinates): void => {
-        const circleIndex = get().circles.findIndex(v => v.id == id)
-
-        if(circleIndex != -1){
-            const circlesNew = get().circles
-
-            circlesNew[circleIndex].coords = newCoords
-            set({circles: [...circlesNew]})
-        }
-    },
     setMovingCircleById: (id: Symbol, value: boolean): void => {
         const circleIndex = get().circles.findIndex(v => v.id == id)
 
@@ -109,13 +97,19 @@ export const useGameStore = create<IGameStore>((set, get) => ({
         }
     },
     setMoving: (value: MovingTypes): void => set(state => ({...state, moving: value})),
-    increaseScoreBlack: (): void => set({scoreBlack: get().scoreBlack + 1}),
-    increaseScoreWhite: (): void => set({scoreWhite: get().scoreWhite + 1}),
+    increaseScore: (team: CircleTypeEnum): void => {
+        switch (team) {
+            case CircleTypeEnum.Black:
+                set({scoreBlack: get().scoreBlack + 1})
+                break
+            case CircleTypeEnum.White:
+                set({scoreWhite: get().scoreWhite + 1})
+                break
+        }
+    },
     getChechedCount: (): number => get().circles.filter(circle => circle.isChecked).length,
     canICheckCircles: (): boolean => get().circles.filter(circle => circle.isChecked).length < 3,
     changeTeam: (): void => {
-        console.log('БЛЯТЬ!');
-        
         let currentTeam = get().team
 
         if (currentTeam == CircleTypeEnum.White) {

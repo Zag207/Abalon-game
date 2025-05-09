@@ -1,15 +1,14 @@
 import { useGameStore } from "./store/store"
 import { CircleTypeEnum, ICircleCoordinates, ICircleType } from "./types/CircleTypes"
-import {MovingTypes, MovingTypes1} from "./types/MovingTypes"
+import { MovingTypes, MovingTypes1 } from "./types/MovingTypes"
 import classes from "./scss/Game.module.scss"
 import Board from "./components/Board"
 import Controls from "./components/Controls"
+import { useEffect } from "react"
 
 function App() {
   const circles = useGameStore(state => state.circles)
   const team = useGameStore(state => state.team)
-  const moving = useGameStore(state => state.moving)
-  const isErrorMove = useGameStore(state => state.isErrorMove)
   const movingMap: Map<number, MovingTypes> = new Map([
     [1, MovingTypes.UpRight],
     [2, MovingTypes.Right],
@@ -18,25 +17,12 @@ function App() {
     [5, MovingTypes.Left],
     [6, MovingTypes.UpLeft]
   ])
-
-  console.log(`team ${useGameStore(state => state.team)}`);
   
-
-  const deleteCircle = useGameStore(state => state.deleteCircleById)
   const changeMoving = useGameStore(state => state.setMoving)
   const setCircles = useGameStore(state => state.setCircles)
-  const setMovingCircleById = useGameStore(state => state.setMovingCircleById)
-  const setCoordsById = useGameStore(state => state.setCoordsById)
   const changeTeam = useGameStore(state => state.changeTeam)
   const setIsErrorMove = useGameStore(state => state.setIsErrorMove)
-
-  const deleteCircleHandler = () => {
-    const circle = circles.find(c => c.isChecked == true)
-
-    if (circle != undefined) {
-      deleteCircle(circle.id)
-    }
-  }
+  const increaseScore = useGameStore(state => state.increaseScore)
 
   const updateCoords = (coords: ICircleCoordinates, deltaCoords: ICircleCoordinates): ICircleCoordinates => { return {
     line: coords.line + deltaCoords.line,
@@ -68,15 +54,10 @@ function App() {
           deltaLine = -1
           break;
       }
-
+      
       return {line: deltaLine, diagonal: deltaDiagonal}
   }
-
-  interface DiagonalLimits{
-    diagonalStart: number,
-    diagonalEnd: number
-  }
-
+    
   const getDiagonalLimitsForLine = (line: number): DiagonalLimits => {
     const res: DiagonalLimits = {
       diagonalStart: -1,
@@ -112,6 +93,11 @@ function App() {
     
     return res
   }
+  interface DiagonalLimits{
+    diagonalStart: number,
+    diagonalEnd: number
+  }
+
   const isHexEmpty = (coords: ICircleCoordinates): boolean => circles.find(
     circle => circle.coords.line == coords.line && circle.coords.diagonal == coords.diagonal
   ) == undefined
@@ -168,6 +154,50 @@ function App() {
 
     return res
   }
+  const getEmemyTeam = (team: CircleTypeEnum): CircleTypeEnum => team == CircleTypeEnum.Black ? CircleTypeEnum.White : CircleTypeEnum.Black
+  const getCircleLine = (circleChecked: ICircleType, moving: MovingTypes): ICircleType[] => {
+    const deltaCoords = getCircleDeltaCoords(moving)
+    const circleLine = [circleChecked]
+
+    let nextCoords = updateCoords(circleLine[circleLine.length - 1].coords, deltaCoords)
+
+    while (isInBoard(nextCoords) && !isHexEmpty(nextCoords)) {
+      circleLine.push(circles.find(circle => circle.coords.line == nextCoords.line && circle.coords.diagonal == nextCoords.diagonal)!)
+      nextCoords = updateCoords(circleLine[circleLine.length - 1].coords, deltaCoords)
+    }
+
+    return circleLine
+  }
+  const checkForLinear = (circleLine: ICircleType[], moving: MovingTypes): boolean => {
+    let res = true
+    let deltaCoords = getCircleDeltaCoords(moving)
+    const enemyTeam = getEmemyTeam(team)
+
+    const myTeamCircleCount = circleLine.filter(circle => circle.type == team).length
+    const enemyCircleCount = circleLine.filter(circle => circle.type == enemyTeam).length
+    const isEndBoard = !isInBoard(updateCoords(circleLine[circleLine.length - 1].coords, deltaCoords))
+    const firstEnemyCoords = circleLine.find(circle => circle.type == enemyTeam)?.coords
+    const lastMyCoords = [...circleLine].reverse().find(circle => circle.type == team)!.coords
+
+    if(myTeamCircleCount > 3)
+      res &&= false
+    else if(enemyCircleCount > 0)
+    {
+      if(enemyCircleCount >= myTeamCircleCount)
+        res &&= false
+
+      const expectedEnemyCoords = updateCoords(lastMyCoords, deltaCoords)
+
+      if(firstEnemyCoords!.line != expectedEnemyCoords.line || firstEnemyCoords!.diagonal != expectedEnemyCoords.diagonal)
+        res &&= false
+    }
+    else if(enemyCircleCount == 0 && isEndBoard)
+      res &&= false
+    else
+      res &&= true
+
+    return res
+  }
 
   const getMovingType = (checkedCount: number): MovingTypes1 => {
     let res: MovingTypes1
@@ -211,6 +241,33 @@ function App() {
 
       setIsErrorMove(!isGoodMove)
     }
+    else if(movingType == MovingTypes1.Linear)
+    {
+      const circleLine = getCircleLine(circleChecked[0], moveDirection)
+      const isGoodMove = checkForLinear(circleLine, moveDirection)
+
+      if(isGoodMove)
+      {
+        const circlesNew = circles.map(circle => {
+          if (circleLine.find(el => el.id == circle.id) == undefined) return circle;
+          
+          const newCoords = updateCoords(circle.coords, getCircleDeltaCoords(moveDirection))
+
+          if(!isInBoard(newCoords))
+            increaseScore(getEmemyTeam(circle.type))
+
+          return {
+            ...circle,
+            isMoving: true,
+            coords: newCoords,
+          }
+        })
+        changeTeam()
+        setCircles(circlesNew)
+      }
+
+      setIsErrorMove(!isGoodMove)
+    }
   }
 
   const createMove = (movingPosition: number) => {
@@ -224,6 +281,13 @@ function App() {
       }
     }
   }
+
+  useEffect(() => {
+    const filteredCircles = circles.filter(circle => isInBoard(circle.coords))
+
+    if(filteredCircles.length < circles.length)
+      setCircles(filteredCircles)
+  }, [])
 
   return (
     <div className={classes.game}>

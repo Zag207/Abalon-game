@@ -30,7 +30,7 @@ const Circle:React.FC<CircleProps> = ({id, type, isChecked, moving, isMoving}) =
     }
     const clearIsMoving = () => {
         setIsMoved(id, false)
-        updateIsChecked()
+        setIsChecked(id, false)
     }
 
     if(!isChecked)
