@@ -1,5 +1,5 @@
 import { create }  from "zustand"
-import { CircleTypeEnum, ICircleCoordinates, ICircleType } from "../types/CircleTypes"
+import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
 import {MovingTypes} from "../types/MovingTypes"
 
 const prepareCirclesLine = (line: number, startDiagonal: number, circlesCount: number, type: CircleTypeEnum): ICircleType[] => {

@@ -1,6 +1,6 @@
 import React from "react"
 import { ICircleType } from "../types/CircleTypes"
-import MovingTypes from "../types/MovingTypes"
+import { MovingTypes } from "../types/MovingTypes"
 import Circle from "./Circle"
 import classes from "../scss/Hexagon.module.scss"
 

@@ -1,7 +1,7 @@
 import React from "react"
 import classes from "../scss/HexagonLine.module.scss"
 import Hexagon from "./Hexagon"
-import MovingTypes from "../types/MovingTypes"
+import { MovingTypes } from "../types/MovingTypes"
 import { ICircleType } from "../types/CircleTypes"
 
 interface HexagonLineProps{
