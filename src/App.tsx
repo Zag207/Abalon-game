@@ -177,7 +177,7 @@ function App() {
   }
   const checkForLinear = (circleLine: ICircleType[], moving: MovingTypes): boolean => {
     let res = true
-    let deltaCoords = getCircleDeltaCoords(moving)
+    const deltaCoords = getCircleDeltaCoords(moving)
     const enemyTeam = getEmemyTeam(team)
 
     const myTeamCircleCount = circleLine.filter(circle => circle.type == team).length
@@ -294,7 +294,7 @@ function App() {
 
     if(filteredCircles.length < circles.length)
       setCircles(filteredCircles)
-  }, [])
+  })
 
   return (
     <div className={classes.game}>
