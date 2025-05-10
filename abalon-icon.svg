@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" transform="scale(1.5)">
+  <!-- Игровое поле (шестиугольник) -->
+  <path d="M32 12L12 32L32 52L52 32L32 12Z" fill="#34495e" stroke="#ecf0f1" stroke-width="1"/>
+  
+  <!-- Черные шашки -->
+  <circle cx="32" cy="20" r="5" fill="#2c3e50" stroke="#ecf0f1" stroke-width="1"/>
+  <circle cx="26" cy="26" r="5" fill="#2c3e50" stroke="#ecf0f1" stroke-width="1"/>
+  <circle cx="38" cy="26" r="5" fill="#2c3e50" stroke="#ecf0f1" stroke-width="1"/>
+  
+  <!-- Белые шашки -->
+  <circle cx="32" cy="44" r="5" fill="#ecf0f1" stroke="#2c3e50" stroke-width="1"/>
+  <circle cx="26" cy="38" r="5" fill="#ecf0f1" stroke="#2c3e50" stroke-width="1"/>
+  <circle cx="38" cy="38" r="5" fill="#ecf0f1" stroke="#2c3e50" stroke-width="1"/>
+</svg>
