@@ -1,6 +1,6 @@
 import { useGameStore } from "./store/store"
 import { CircleTypeEnum, CircleCoordinates, CircleType } from "./types/CircleTypes"
-import { MovingTypes, MovingTypes1 } from "./types/MovingTypes"
+import { MovingDirections, MovingTypes } from "./types/MovingTypes"
 import classes from "./scss/App.module.scss"
 import Board from "./components/Board"
 import Controls from "./components/Controls"
@@ -12,13 +12,13 @@ import WinNotification from "./components/WinNotification"
 function App() {
   const circles = useGameStore(state => state.circles)
   const team = useGameStore(state => state.team)
-  const movingMap: Map<number, MovingTypes> = new Map([
-    [1, MovingTypes.UpRight],
-    [2, MovingTypes.Right],
-    [3, MovingTypes.DownRight],
-    [4, MovingTypes.DownLeft],
-    [5, MovingTypes.Left],
-    [6, MovingTypes.UpLeft]
+  const movingMap: Map<number, MovingDirections> = new Map([
+    [1, MovingDirections.UpRight],
+    [2, MovingDirections.Right],
+    [3, MovingDirections.DownRight],
+    [4, MovingDirections.DownLeft],
+    [5, MovingDirections.Left],
+    [6, MovingDirections.UpLeft]
   ])
   
   const getWinnerTeam = useGameStore(state => state.getWinnerTeam)
@@ -33,29 +33,29 @@ function App() {
     line: coords.line + deltaCoords.line,
     diagonal: coords.diagonal + deltaCoords.diagonal,
   }}
-  const getCircleDeltaCoords = (moveDirection: MovingTypes): CircleCoordinates => {
+  const getCircleDeltaCoords = (moveDirection: MovingDirections): CircleCoordinates => {
     let deltaLine = 0
       let deltaDiagonal = 0
 
       switch (moveDirection) {
-        case MovingTypes.UpRight:
+        case MovingDirections.UpRight:
           deltaLine = -1
           deltaDiagonal = 1
           break;
-        case MovingTypes.Right:
+        case MovingDirections.Right:
           deltaDiagonal = 1
           break;
-        case MovingTypes.DownRight:
+        case MovingDirections.DownRight:
           deltaLine = 1
           break;
-        case MovingTypes.DownLeft:
+        case MovingDirections.DownLeft:
           deltaLine = 1
           deltaDiagonal = -1
           break;
-        case MovingTypes.Left:
+        case MovingDirections.Left:
           deltaDiagonal = -1
           break;
-        case MovingTypes.UpLeft:
+        case MovingDirections.UpLeft:
           deltaLine = -1
           break;
       }
@@ -110,7 +110,7 @@ function App() {
     Math.abs(coords1.diagonal - coords2.diagonal), 
     Math.abs(coords1.line - coords2.line)
   )
-  const checkForParall = (circlesChecked: CircleType[], moving: MovingTypes): boolean => {
+  const checkForParall = (circlesChecked: CircleType[], moving: MovingDirections): boolean => {
     const line = circlesChecked[0].coords.line
     const diagonal = circlesChecked[0].coords.diagonal
 
@@ -160,7 +160,7 @@ function App() {
     return res
   }
   const getEmemyTeam = (team: CircleTypeEnum): CircleTypeEnum => team == CircleTypeEnum.Black ? CircleTypeEnum.White : CircleTypeEnum.Black
-  const getCircleLine = (circleChecked: CircleType, moving: MovingTypes): CircleType[] => {
+  const getCircleLine = (circleChecked: CircleType, moving: MovingDirections): CircleType[] => {
     const deltaCoords = getCircleDeltaCoords(moving)
     const circleLine = [circleChecked]
 
@@ -173,7 +173,7 @@ function App() {
 
     return circleLine
   }
-  const checkForLinear = (circleLine: CircleType[], moving: MovingTypes): boolean => {
+  const checkForLinear = (circleLine: CircleType[], moving: MovingDirections): boolean => {
     let res = true
     const deltaCoords = getCircleDeltaCoords(moving)
     const enemyTeam = getEmemyTeam(team)
@@ -204,27 +204,27 @@ function App() {
     return res
   }
 
-  const getMovingType = (checkedCount: number): MovingTypes1 => {
-    let res: MovingTypes1
+  const getMovingType = (checkedCount: number): MovingTypes => {
+    let res: MovingTypes
 
     if(checkedCount == 1){
-      res = MovingTypes1.Linear
+      res = MovingTypes.Linear
     }
     else if(checkedCount > 1){
-      res = MovingTypes1.Parallel
+      res = MovingTypes.Parallel
     }
     else{
-      res = MovingTypes1.None
+      res = MovingTypes.None
     }
 
     return res
   }
 
-  const move = (moveDirection: MovingTypes) => {
+  const move = (moveDirection: MovingDirections) => {
     const circleChecked = circles.filter(c => c.isChecked == true)
     const movingType = getMovingType(circleChecked.length)
 
-    if(movingType == MovingTypes1.Parallel)
+    if(movingType == MovingTypes.Parallel)
     {
       const isGoodMove = checkForParall(circleChecked, moveDirection)
       
@@ -245,7 +245,7 @@ function App() {
 
       setIsErrorMove(!isGoodMove)
     }
-    else if(movingType == MovingTypes1.Linear)
+    else if(movingType == MovingTypes.Linear)
     {
       const circleLine = getCircleLine(circleChecked[0], moveDirection)
       const isGoodMove = checkForLinear(circleLine, moveDirection)
@@ -278,7 +278,7 @@ function App() {
     const movingCurrent = movingMap.get(movingPosition)
 
     return () => {
-      if(movingCurrent != undefined && movingCurrent != MovingTypes.NoMove)
+      if(movingCurrent != undefined && movingCurrent != MovingDirections.NoMove)
       {
         changeMoving(movingCurrent)
         move(movingCurrent)

@@ -1,11 +1,11 @@
 import { CircleType } from "../types/CircleTypes"
-import { MovingTypes } from "../types/MovingTypes"
+import { MovingDirections } from "../types/MovingTypes"
 import Circle from "./Circle"
 import classes from "../scss/Hexagon.module.scss"
 
 interface HexagonProps{
     circle?: CircleType,
-    moving: MovingTypes,
+    moving: MovingDirections,
 }
 
 const Hexagon = ({circle, moving}: HexagonProps) => {

@@ -1,12 +1,12 @@
 import classes from "../scss/HexagonLine.module.scss"
 import Hexagon from "./Hexagon"
-import { MovingTypes } from "../types/MovingTypes"
+import { MovingDirections } from "../types/MovingTypes"
 import { CircleType } from "../types/CircleTypes"
 
 interface HexagonLineProps{
     startDiagonal: number,
     hexNumber: number,
-    moving: MovingTypes,
+    moving: MovingDirections,
     circles: CircleType[],
 }
 

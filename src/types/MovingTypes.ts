@@ -1,4 +1,4 @@
-export enum MovingTypes{
+export enum MovingDirections{
     NoMove,
     UpRight,
     Right,
@@ -8,7 +8,7 @@ export enum MovingTypes{
     UpLeft 
 }
 
-export enum MovingTypes1{
+export enum MovingTypes{
     None,
     Linear,
     Parallel

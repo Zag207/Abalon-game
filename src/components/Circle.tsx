@@ -1,10 +1,10 @@
 import { CircleTypeEnum, CircleType } from "../types/CircleTypes"
 import classes from "../scss/Circle.module.scss"
-import {MovingTypes} from "../types/MovingTypes"
+import {MovingDirections} from "../types/MovingTypes"
 import { useGameStore } from "../store/store"
 
 interface CircleProps extends CircleType{
-    moving: MovingTypes,
+    moving: MovingDirections,
 }
 
 //Не применяется класс movingRight при нажатии на кнопку, а сами анимации работают
@@ -64,22 +64,22 @@ const Circle = ({id, type, isChecked, moving, isMoving}: CircleProps) => {
         cssClass += ' '
 
         switch (moving) {
-            case MovingTypes.UpRight:
+            case MovingDirections.UpRight:
                 cssClass += ' ' + classes.movingUpRight
                 break;
-            case MovingTypes.Right:
+            case MovingDirections.Right:
                 cssClass += ' ' + classes.movingRight
                 break;
-            case MovingTypes.DownRight:
+            case MovingDirections.DownRight:
                 cssClass += ' ' + classes.movingDownRight
                 break;
-            case MovingTypes.DownLeft:
+            case MovingDirections.DownLeft:
                 cssClass += ' ' + classes.movingDownLeft
                 break;
-            case MovingTypes.Left:
+            case MovingDirections.Left:
                 cssClass += ' ' + classes.movingLeft
                 break;
-            case MovingTypes.UpLeft:
+            case MovingDirections.UpLeft:
                 cssClass += ' ' + classes.movingUpLeft
                 break;
             default:

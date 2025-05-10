@@ -1,6 +1,6 @@
 import { create }  from "zustand"
 import { CircleTypeEnum, CircleType } from "../types/CircleTypes"
-import {MovingTypes} from "../types/MovingTypes"
+import {MovingDirections} from "../types/MovingTypes"
 
 const prepareCirclesLine = (line: number, startDiagonal: number, circlesCount: number, type: CircleTypeEnum): CircleType[] => {
     const arr: CircleType[] = []
@@ -41,7 +41,7 @@ const prepareCircles = (): CircleType[] => {
 
 interface IGameStore{
     circles: CircleType[],
-    moving: MovingTypes,
+    moving: MovingDirections,
     scoreBlack: number,
     scoreWhite: number,
     team: CircleTypeEnum,
@@ -51,7 +51,7 @@ interface IGameStore{
     setCircles(circles: CircleType[]): void,
     setMovingCircleById(id: Symbol, movingValue: boolean): void,
     setChecked(id: Symbol, value: boolean): void,
-    setMoving(value: MovingTypes): void,
+    setMoving(value: MovingDirections): void,
     increaseScore(team: CircleTypeEnum): void,
     getChechedCount(): number,
     canICheckCircles(): boolean,
@@ -63,7 +63,7 @@ interface IGameStore{
 
 export const useGameStore = create<IGameStore>((set, get) => ({
     circles: prepareCircles(),
-    moving: MovingTypes.NoMove,
+    moving: MovingDirections.NoMove,
     scoreBlack: 0,
     scoreWhite: 0,
     team: CircleTypeEnum.White,
@@ -101,7 +101,7 @@ export const useGameStore = create<IGameStore>((set, get) => ({
             set({circles: [...circlesNew]})
         }
     },
-    setMoving: (value: MovingTypes): void => set(state => ({...state, moving: value})),
+    setMoving: (value: MovingDirections): void => set(state => ({...state, moving: value})),
     increaseScore: (team: CircleTypeEnum): void => {
         switch (team) {
             case CircleTypeEnum.Black:
