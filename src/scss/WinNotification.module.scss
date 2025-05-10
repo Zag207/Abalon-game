@@ -8,6 +8,9 @@
     justify-content: center;
     align-items: center;
     border-radius: 16px;
+
+    animation-name: scaling;
+    animation-duration: 1s;
 }
 
 .winNotificationContent{
@@ -26,4 +29,13 @@
 
 .white{
     color: white;
+}
+
+@keyframes scaling {
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
 }
