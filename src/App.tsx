@@ -1,5 +1,5 @@
 import { useGameStore } from "./store/store"
-import { CircleTypeEnum, ICircleCoordinates, CircleType } from "./types/CircleTypes"
+import { CircleTypeEnum, CircleCoordinates, CircleType } from "./types/CircleTypes"
 import { MovingTypes, MovingTypes1 } from "./types/MovingTypes"
 import classes from "./scss/App.module.scss"
 import Board from "./components/Board"
@@ -29,11 +29,11 @@ function App() {
   const setIsErrorMove = useGameStore(state => state.setIsErrorMove)
   const increaseScore = useGameStore(state => state.increaseScore)
 
-  const updateCoords = (coords: ICircleCoordinates, deltaCoords: ICircleCoordinates): ICircleCoordinates => { return {
+  const updateCoords = (coords: CircleCoordinates, deltaCoords: CircleCoordinates): CircleCoordinates => { return {
     line: coords.line + deltaCoords.line,
     diagonal: coords.diagonal + deltaCoords.diagonal,
   }}
-  const getCircleDeltaCoords = (moveDirection: MovingTypes): ICircleCoordinates => {
+  const getCircleDeltaCoords = (moveDirection: MovingTypes): CircleCoordinates => {
     let deltaLine = 0
       let deltaDiagonal = 0
 
@@ -82,7 +82,7 @@ function App() {
     
     return res
   }
-  const isInBoard = (coords: ICircleCoordinates): boolean => {
+  const isInBoard = (coords: CircleCoordinates): boolean => {
     let res = false
     const {line, diagonal} = coords
 
@@ -103,10 +103,10 @@ function App() {
     diagonalEnd: number
   }
 
-  const isHexEmpty = (coords: ICircleCoordinates): boolean => circles.find(
+  const isHexEmpty = (coords: CircleCoordinates): boolean => circles.find(
     circle => circle.coords.line == coords.line && circle.coords.diagonal == coords.diagonal
   ) == undefined
-  const getDistance = (coords1: ICircleCoordinates, coords2: ICircleCoordinates): number => Math.max(
+  const getDistance = (coords1: CircleCoordinates, coords2: CircleCoordinates): number => Math.max(
     Math.abs(coords1.diagonal - coords2.diagonal), 
     Math.abs(coords1.line - coords2.line)
   )

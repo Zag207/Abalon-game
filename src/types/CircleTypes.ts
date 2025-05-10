@@ -1,4 +1,4 @@
-export interface ICircleCoordinates{
+export interface CircleCoordinates{
     line: number,
     diagonal: number,
 }
@@ -11,7 +11,7 @@ export enum CircleTypeEnum{
 export interface CircleType{
     id: Symbol,
     type: CircleTypeEnum,
-    coords: ICircleCoordinates,
+    coords: CircleCoordinates,
     isChecked: boolean,
     isMoving: boolean
 }
