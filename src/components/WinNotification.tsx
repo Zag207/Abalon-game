@@ -1,4 +1,3 @@
-import React from "react"
 import { CircleTypeEnum } from "../types/CircleTypes"
 import classes from "../scss/WinNotification.module.scss"
 
@@ -6,7 +5,7 @@ interface WinNotificationProps{
     winnerTeam: CircleTypeEnum
 }
 
-const WinNotification:React.FC<WinNotificationProps> = ({winnerTeam}) => {
+const WinNotification = ({winnerTeam}: WinNotificationProps) => {
     let teamClass: string = ""
 
     switch (winnerTeam) {

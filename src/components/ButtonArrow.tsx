@@ -1,4 +1,3 @@
-import React from "react"
 import classes from "../scss/ButtonArrow.module.scss"
 
 interface ButtonArrowProps{
@@ -6,7 +5,7 @@ interface ButtonArrowProps{
     moveCallback(): void;
 }
 
-const ButtonArrow:React.FC<ButtonArrowProps> = ({position, moveCallback}) => {
+const ButtonArrow = ({position, moveCallback}: ButtonArrowProps) => {
     return (
         <div className={`${classes.arrowContainer} ${position == 1 ? classes.arrowContainer1 : ""}`}
              onClick={moveCallback} >

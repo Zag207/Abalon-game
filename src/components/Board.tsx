@@ -1,11 +1,8 @@
-import React from "react"
 import { useGameStore } from "../store/store";
 import HexagonLine from "./HexagonLine";
 import classes from "../scss/Board.module.scss"
 
-interface BoardProps{}
-
-const Board:React.FC<BoardProps> = ({}) => {
+const Board = ({}) => {
     const circles = useGameStore(state => state.circles)
     const moving = useGameStore(state => state.moving)
 

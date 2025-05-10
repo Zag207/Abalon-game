@@ -1,4 +1,3 @@
-import React from "react"
 import { ICircleType } from "../types/CircleTypes"
 import { MovingTypes } from "../types/MovingTypes"
 import Circle from "./Circle"
@@ -9,7 +8,7 @@ interface HexagonProps{
     moving: MovingTypes,
 }
 
-const Hexagon:React.FC<HexagonProps> = ({circle, moving}) => {
+const Hexagon = ({circle, moving}: HexagonProps) => {
   return (
     <div className={classes.hexagonContainer}>
       <svg className={classes.hexagonSvg} viewBox="0 0 86.6 100">

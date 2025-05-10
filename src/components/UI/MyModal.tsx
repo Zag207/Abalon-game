@@ -6,7 +6,7 @@ interface MyModalProps{
     isVisible: boolean
 }
 
-const MyModal:React.FC<MyModalProps> = ({children, isVisible}) => {
+const MyModal = ({children, isVisible}: MyModalProps) => {
     const rootClasses = [classes.myModal]
 
     if(isVisible)
@@ -14,9 +14,9 @@ const MyModal:React.FC<MyModalProps> = ({children, isVisible}) => {
 
     return (
         <div className={rootClasses.join(" ")}>
-        <div className={classes.myModalContent}>
-            {children}
-        </div>
+            <div className={classes.myModalContent}>
+                {children}
+            </div>
         </div>
     )
 };

@@ -118,7 +118,6 @@ function App() {
     const isOneDiagonal = circlesChecked.reduce((acc, el) => acc && el.coords.diagonal == diagonal, true)
     
     let sortedCircledChecked = circlesChecked.sort((a, b) => a.coords.diagonal - b.coords.diagonal)
-    console.log(sortedCircledChecked.map(c => c.coords));
     
     const initRes = {
       res: true,
@@ -139,7 +138,6 @@ function App() {
     }, initRes).res
     
     let res = isOneLine || isOneDiagonal || isOneOtherDiagonal
-    console.log(`${isOneLine} + ${isOneDiagonal} + ${isOneOtherDiagonal} = ${res}`)
     
     // Проверка, свободна ли лунка по-направлению движения
     res = res && circlesChecked.reduce((acc, circle) => {
@@ -229,7 +227,6 @@ function App() {
     if(movingType == MovingTypes1.Parallel)
     {
       const isGoodMove = checkForParall(circleChecked, moveDirection)
-      console.log(isGoodMove);
       
       if(isGoodMove)
       {

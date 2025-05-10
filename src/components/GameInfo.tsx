@@ -1,11 +1,8 @@
-import React from "react"
 import classes from "../scss/GameInfo.module.scss"
 import { useGameStore } from "../store/store";
 import { CircleTypeEnum } from "../types/CircleTypes";
 
-interface GameInfoProps{}
-
-const GameInfo:React.FC<GameInfoProps> = ({}) => {
+const GameInfo = ({}) => {
     const scoreBlack = useGameStore(state => state.scoreBlack)
     const scoreWhite = useGameStore(state => state.scoreWhite)
     const team = useGameStore(state => state.team)
