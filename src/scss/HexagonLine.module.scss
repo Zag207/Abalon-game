@@ -7,7 +7,6 @@
 
     &:not(:first-child){
         margin-top: calc(vars.$hex-height / -4 - vars.$hex-gap * -1);
-        // margin-top: -33px;
     }
 }
   
