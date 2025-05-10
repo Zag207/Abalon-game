@@ -8,7 +8,7 @@ export enum CircleTypeEnum{
     White
 }
 
-export interface ICircleType{
+export interface CircleType{
     id: Symbol,
     type: CircleTypeEnum,
     coords: ICircleCoordinates,

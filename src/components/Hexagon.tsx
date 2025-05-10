@@ -1,10 +1,10 @@
-import { ICircleType } from "../types/CircleTypes"
+import { CircleType } from "../types/CircleTypes"
 import { MovingTypes } from "../types/MovingTypes"
 import Circle from "./Circle"
 import classes from "../scss/Hexagon.module.scss"
 
 interface HexagonProps{
-    circle?: ICircleType,
+    circle?: CircleType,
     moving: MovingTypes,
 }
 

@@ -1,5 +1,5 @@
 import { useGameStore } from "./store/store"
-import { CircleTypeEnum, ICircleCoordinates, ICircleType } from "./types/CircleTypes"
+import { CircleTypeEnum, ICircleCoordinates, CircleType } from "./types/CircleTypes"
 import { MovingTypes, MovingTypes1 } from "./types/MovingTypes"
 import classes from "./scss/App.module.scss"
 import Board from "./components/Board"
@@ -110,7 +110,7 @@ function App() {
     Math.abs(coords1.diagonal - coords2.diagonal), 
     Math.abs(coords1.line - coords2.line)
   )
-  const checkForParall = (circlesChecked: ICircleType[], moving: MovingTypes): boolean => {
+  const checkForParall = (circlesChecked: CircleType[], moving: MovingTypes): boolean => {
     const line = circlesChecked[0].coords.line
     const diagonal = circlesChecked[0].coords.diagonal
 
@@ -160,7 +160,7 @@ function App() {
     return res
   }
   const getEmemyTeam = (team: CircleTypeEnum): CircleTypeEnum => team == CircleTypeEnum.Black ? CircleTypeEnum.White : CircleTypeEnum.Black
-  const getCircleLine = (circleChecked: ICircleType, moving: MovingTypes): ICircleType[] => {
+  const getCircleLine = (circleChecked: CircleType, moving: MovingTypes): CircleType[] => {
     const deltaCoords = getCircleDeltaCoords(moving)
     const circleLine = [circleChecked]
 
@@ -173,7 +173,7 @@ function App() {
 
     return circleLine
   }
-  const checkForLinear = (circleLine: ICircleType[], moving: MovingTypes): boolean => {
+  const checkForLinear = (circleLine: CircleType[], moving: MovingTypes): boolean => {
     let res = true
     const deltaCoords = getCircleDeltaCoords(moving)
     const enemyTeam = getEmemyTeam(team)

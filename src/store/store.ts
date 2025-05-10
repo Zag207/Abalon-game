@@ -1,9 +1,9 @@
 import { create }  from "zustand"
-import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
+import { CircleTypeEnum, CircleType } from "../types/CircleTypes"
 import {MovingTypes} from "../types/MovingTypes"
 
-const prepareCirclesLine = (line: number, startDiagonal: number, circlesCount: number, type: CircleTypeEnum): ICircleType[] => {
-    const arr: ICircleType[] = []
+const prepareCirclesLine = (line: number, startDiagonal: number, circlesCount: number, type: CircleTypeEnum): CircleType[] => {
+    const arr: CircleType[] = []
 
     for (let diagonal = startDiagonal; diagonal < startDiagonal + circlesCount; diagonal++) 
     {
@@ -21,8 +21,8 @@ const prepareCirclesLine = (line: number, startDiagonal: number, circlesCount: n
 
     return arr
 }
-const prepareCircles = (): ICircleType[] => {
-    const arr: ICircleType[] = []
+const prepareCircles = (): CircleType[] => {
+    const arr: CircleType[] = []
 
     let circleType = CircleTypeEnum.White
 
@@ -40,7 +40,7 @@ const prepareCircles = (): ICircleType[] => {
 }
 
 interface IGameStore{
-    circles: ICircleType[],
+    circles: CircleType[],
     moving: MovingTypes,
     scoreBlack: number,
     scoreWhite: number,
@@ -48,7 +48,7 @@ interface IGameStore{
     isErrorMove: boolean,
 
     isWin(): boolean,
-    setCircles(circles: ICircleType[]): void,
+    setCircles(circles: CircleType[]): void,
     setMovingCircleById(id: Symbol, movingValue: boolean): void,
     setChecked(id: Symbol, value: boolean): void,
     setMoving(value: MovingTypes): void,
@@ -80,7 +80,7 @@ export const useGameStore = create<IGameStore>((set, get) => ({
         }
     },
     isWin: (): boolean => get().scoreBlack >= 6 || get().scoreWhite >= 6,
-    setCircles: (circlesNew: ICircleType[]): void => set({circles: [...circlesNew]}),
+    setCircles: (circlesNew: CircleType[]): void => set({circles: [...circlesNew]}),
     setMovingCircleById: (id: Symbol, value: boolean): void => {
         const circleIndex = get().circles.findIndex(v => v.id == id)
 

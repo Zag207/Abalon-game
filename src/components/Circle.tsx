@@ -1,9 +1,9 @@
-import { CircleTypeEnum, ICircleType } from "../types/CircleTypes"
+import { CircleTypeEnum, CircleType } from "../types/CircleTypes"
 import classes from "../scss/Circle.module.scss"
 import {MovingTypes} from "../types/MovingTypes"
 import { useGameStore } from "../store/store"
 
-interface CircleProps extends ICircleType{
+interface CircleProps extends CircleType{
     moving: MovingTypes,
 }
 
