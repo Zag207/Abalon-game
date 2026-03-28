@@ -1,17 +1,17 @@
-export interface CircleCoordinates{
-    line: number,
-    diagonal: number,
+export interface CircleCoordinates {
+  diagonal: number,
+  line: number,
 }
 
-export enum CircleTypeEnum{
-    Black,
-    White
+export enum CircleTypeEnum {
+  Black,
+  White
 }
 
-export interface CircleType{
-    id: Symbol,
-    type: CircleTypeEnum,
-    coords: CircleCoordinates,
-    isChecked: boolean,
-    isMoving: boolean
+export interface CircleType {
+  coords: CircleCoordinates,
+  id: symbol,
+  isChecked: boolean,
+  isMoving: boolean
+  type: CircleTypeEnum,
 }

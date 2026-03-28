@@ -1,15 +1,15 @@
-export enum MovingDirections{
-    NoMove,
-    UpRight,
-    Right,
-    DownRight,
-    DownLeft,
-    Left,
-    UpLeft 
+export enum MovingDirections {
+  NoMove,
+  UpRight,
+  Right,
+  DownRight,
+  DownLeft,
+  Left,
+  UpLeft
 }
 
-export enum MovingTypes{
-    None,
-    Linear,
-    Parallel
+export enum MovingTypes {
+  None,
+  Linear,
+  Parallel
 }
