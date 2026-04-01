@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { useGameStore } from '@/store/store';
 import { CircleTypeEnum } from '@/types/CircleTypes';
 
@@ -10,10 +12,16 @@ const GameInfo = () => {
 
   return (
     <div className={styles.gameInfo}>
-      <div className={`${styles.gameInfoItem} ${styles.black} ${team === CircleTypeEnum.Black ? styles.selected : ''}`}>
+      <div className={clsx([styles.gameInfoItem, styles.black], {
+        [styles.selected]: team === CircleTypeEnum.Black
+      })}
+      >
         Black score: {scoreBlack}
       </div>
-      <div className={`${styles.gameInfoItem} ${styles.white} ${team === CircleTypeEnum.White ? styles.selected : ''}`}>
+      <div className={clsx([styles.gameInfoItem, styles.white], {
+        [styles.selected]: team === CircleTypeEnum.White
+      })}
+      >
         White score: {scoreWhite}
       </div>
     </div>
