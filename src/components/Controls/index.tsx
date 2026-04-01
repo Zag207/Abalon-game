@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { createMove } from '@/game/moving';
 import { useGameStore } from '@/store/store';
 
@@ -29,7 +31,7 @@ const Controls = () => {
   return (
     <div className={styles.controls}>
       {positions.map((position) => (
-        <div key={position} className={`${styles.el} ${styles[`abs${position}`]}`}>
+        <div key={position} className={clsx([styles.el, styles[`abs${position}`]])}>
           <ButtonArrow
             moveCallback={createMovingFunctionCallback(position)}
             position={position}
