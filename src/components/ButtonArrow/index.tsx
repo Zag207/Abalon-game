@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import styles from './styles.module.scss';
 
 interface ButtonArrowProps {
@@ -7,7 +9,7 @@ interface ButtonArrowProps {
 
 const ButtonArrow = ({ position, moveCallback }: ButtonArrowProps) => (
   <div
-    className={`${styles.arrowContainer} ${position === 1 ? styles.arrowContainer1 : ''}`}
+    className={clsx(styles.arrowContainer, position === 1 && styles.arrowContainer1)}
     onClick={moveCallback}
   >
     <svg className={styles[`rotate-${position}`]} viewBox='0 0 100 85'>
