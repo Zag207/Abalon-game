@@ -12,6 +12,27 @@ type setIsErrorMove = (isError: boolean) => void;
 type increaseScore = (team: CircleTypeEnum) => void;
 type setMoving = (currentMoving: MovingDirections) => void;
 
+export interface MoveParams {
+  changeTeam: changeTeam,
+  circles: CircleType[],
+  currentTeam: CircleTypeEnum,
+  increaseScore: increaseScore,
+  moveDirection: MovingDirections,
+  setCircles: setCircles,
+  setIsErrorMove: setIsErrorMove,
+}
+
+export interface CreateMoveParams {
+  changeTeam: changeTeam,
+  circles: CircleType[],
+  currentTeam: CircleTypeEnum,
+  increaseScore: increaseScore,
+  movingPosition: number,
+  setCircles: setCircles,
+  setIsErrorMove: setIsErrorMove,
+  setMoving: setMoving
+}
+
 export const getMovingType = (checkedCount: number): MovingTypes => {
   let res: MovingTypes;
 
@@ -28,15 +49,15 @@ export const getMovingType = (checkedCount: number): MovingTypes => {
   return res;
 };
 
-export const move = (
-  moveDirection: MovingDirections,
-  circles: CircleType[],
-  currentTeam: CircleTypeEnum,
-  changeTeam: changeTeam,
-  setCircles: setCircles,
-  setIsErrorMove: setIsErrorMove,
-  increaseScore: increaseScore
-) => {
+export const move = ({
+  changeTeam,
+  circles,
+  currentTeam,
+  increaseScore,
+  moveDirection,
+  setCircles,
+  setIsErrorMove
+}: MoveParams) => {
   const circleChecked = circles.filter((c) => c.isChecked === true);
   const movingType = getMovingType(circleChecked.length);
 
@@ -90,31 +111,22 @@ export const move = (
   }
 };
 
-export const createMove = (
-  movingPosition: number,
-  circles: CircleType[],
-  currentTeam: CircleTypeEnum,
-  changeTeam: changeTeam,
-  setCircles: setCircles,
-  setIsErrorMove: setIsErrorMove,
-  increaseScore: increaseScore,
-  setMoving: setMoving
-) => {
-  const movingCurrent = movingMap.get(movingPosition);
+export const createMove = (params: CreateMoveParams) => {
+  const movingCurrent = movingMap.get(params.movingPosition);
 
   return () => {
     if (movingCurrent !== undefined && movingCurrent !== MovingDirections.NoMove)
     {
-      setMoving(movingCurrent);
-      move(
-        movingCurrent,
-        circles,
-        currentTeam,
-        changeTeam,
-        setCircles,
-        setIsErrorMove,
-        increaseScore
-      );
+      params.setMoving(movingCurrent);
+      move({
+        changeTeam: params.changeTeam,
+        circles: params.circles,
+        currentTeam: params.currentTeam,
+        increaseScore: params.increaseScore,
+        moveDirection: movingCurrent,
+        setCircles: params.setCircles,
+        setIsErrorMove: params.setIsErrorMove
+      });
     }
   };
 };
