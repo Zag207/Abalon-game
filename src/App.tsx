@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
+import classes from './App.module.scss';
 import Board from './components/Board';
 import Controls from './components/Controls';
 import GameInfo from './components/GameInfo';
 import MyModal from './components/UI/MyModal';
 import WinNotification from './components/WinNotification';
 import { isInBoard } from './game/geometry';
-import classes from './scss/App.module.scss';
 import { useGameStore } from './store/store';
 
 const App = () => {
