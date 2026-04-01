@@ -17,16 +17,17 @@ import { CircleTypeEnum } from './types/CircleTypes';
 import { MovingDirections, MovingTypes } from './types/MovingTypes';
 
 const App = () => {
-  const circles = useGameStore((state) => state.circles);
-  const team = useGameStore((state) => state.team);
-
-  const getWinnerTeam = useGameStore((state) => state.getWinnerTeam);
-  const getIsWin = useGameStore((state) => state.isWin);
-  const changeMoving = useGameStore((state) => state.setMoving);
-  const setCircles = useGameStore((state) => state.setCircles);
-  const changeTeam = useGameStore((state) => state.changeTeam);
-  const setIsErrorMove = useGameStore((state) => state.setIsErrorMove);
-  const increaseScore = useGameStore((state) => state.increaseScore);
+  const {
+    circles,
+    team,
+    getWinnerTeam,
+    isWin,
+    setMoving,
+    setCircles,
+    changeTeam,
+    setIsErrorMove,
+    increaseScore
+  } = useGameStore((store) => store);
 
   const updateCoords = (
     coords: CircleCoordinates,
@@ -300,7 +301,7 @@ const App = () => {
     return () => {
       if (movingCurrent !== undefined && movingCurrent !== MovingDirections.NoMove)
       {
-        changeMoving(movingCurrent);
+        setMoving(movingCurrent);
         move(movingCurrent);
       }
     };
@@ -315,7 +316,7 @@ const App = () => {
 
   return (
     <div className={classes.game}>
-      <MyModal isVisible={getIsWin()}>
+      <MyModal isVisible={isWin()}>
         <WinNotification winnerTeam={getWinnerTeam()} />
       </MyModal>
       <div className={classes.board}>
