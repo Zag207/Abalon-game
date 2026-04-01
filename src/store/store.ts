@@ -32,7 +32,7 @@ export const useGameStore = create<IGameStore>((set, get) => ({
   circles: prepareCircles(),
   moving: MovingDirections.NoMove,
   scoreBlack: 0,
-  scoreWhite: 0,
+  scoreWhite: 5,
   team: CircleTypeEnum.White,
   isErrorMove: false,
 
