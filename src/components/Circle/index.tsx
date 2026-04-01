@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import type { CircleType } from '@/types/CircleTypes';
 
 import { useGameStore } from '@/store/store';
@@ -12,8 +14,6 @@ interface CircleProps extends CircleType {
 
 // Не применяется класс movingRight при нажатии на кнопку, а сами анимации работают
 const Circle = ({ id, type, isChecked, moving, isMoving }: CircleProps) => {
-  let cssClass = styles.circle;
-
   const currentTeam = useGameStore((state) => state.team);
   const isError = useGameStore((state) => state.isErrorMove);
 
@@ -33,65 +33,36 @@ const Circle = ({ id, type, isChecked, moving, isMoving }: CircleProps) => {
     setIsChecked(id, false);
   };
   const clearError = () => {
-    const indexError = cssClass.indexOf(` ${styles.circleError}`);
+    setIsError(false);
+  };
 
-    if (indexError > -1)
-    {
-      const left = cssClass.slice(indexError, indexError + ` ${styles.circleError}`.length);
-      const right = cssClass.slice(indexError + ` ${styles.circleError}`.length);
-
-      cssClass = left + right;
-      setIsError(false);
+  const getMovingClassName = () => {
+    switch (moving) {
+      case MovingDirections.UpRight:
+        return styles.movingUpRight;
+      case MovingDirections.Right:
+        return styles.movingRight;
+      case MovingDirections.DownRight:
+        return styles.movingDownRight;
+      case MovingDirections.DownLeft:
+        return styles.movingDownLeft;
+      case MovingDirections.Left:
+        return styles.movingLeft;
+      case MovingDirections.UpLeft:
+        return styles.movingUpLeft;
+      default:
+        return undefined;
     }
   };
 
-  if (!isChecked)
-  {
-    switch (type)
-    {
-      case CircleTypeEnum.Black:
-        cssClass += ` ${styles.circleBlack}`;
-        break;
-      case CircleTypeEnum.White:
-        cssClass += ` ${styles.circleWhite}`;
-        break;
-    }
-  }
-  else
-  {
-    cssClass += ` ${styles.circleChecked}`;
-  }
-
-  if (isMoving)
-  {
-    cssClass += ' ';
-
-    switch (moving) {
-      case MovingDirections.UpRight:
-        cssClass += ` ${styles.movingUpRight}`;
-        break;
-      case MovingDirections.Right:
-        cssClass += ` ${styles.movingRight}`;
-        break;
-      case MovingDirections.DownRight:
-        cssClass += ` ${styles.movingDownRight}`;
-        break;
-      case MovingDirections.DownLeft:
-        cssClass += ` ${styles.movingDownLeft}`;
-        break;
-      case MovingDirections.Left:
-        cssClass += ` ${styles.movingLeft}`;
-        break;
-      case MovingDirections.UpLeft:
-        cssClass += ` ${styles.movingUpLeft}`;
-        break;
-      default:
-        break;
-    }
-  }
-
-  if (isError && isChecked)
-    cssClass += ` ${styles.circleError}`;
+  const cssClass = clsx(
+    styles.circle,
+    !isChecked && type === CircleTypeEnum.Black && styles.circleBlack,
+    !isChecked && type === CircleTypeEnum.White && styles.circleWhite,
+    isChecked && styles.circleChecked,
+    isMoving && getMovingClassName(),
+    isError && isChecked && styles.circleError
+  );
 
   return (
     <div
