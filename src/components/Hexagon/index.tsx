@@ -1,8 +1,8 @@
-import type { CircleType } from '../types/CircleTypes';
-import type { MovingDirections } from '../types/MovingTypes';
+import type { CircleType } from '@/types/CircleTypes';
+import type { MovingDirections } from '@/types/MovingTypes';
 
-import classes from '../scss/Hexagon.module.scss';
-import Circle from './Circle';
+import Circle from '../Circle';
+import styles from './styles.module.scss';
 
 interface HexagonProps {
   circle?: CircleType,
@@ -10,8 +10,8 @@ interface HexagonProps {
 }
 
 const Hexagon = ({ circle, moving }: HexagonProps) => (
-  <div className={classes.hexagonContainer}>
-    <svg className={classes.hexagonSvg} viewBox='0 0 86.6 100'>
+  <div className={styles.hexagonContainer}>
+    <svg className={styles.hexagonSvg} viewBox='0 0 86.6 100'>
       <polygon points='43.3 0, 86.6 25, 86.6 75, 43.3 100, 0 75, 0 25' />
     </svg>
     {circle !== undefined && (

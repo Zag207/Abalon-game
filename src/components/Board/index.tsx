@@ -1,13 +1,14 @@
-import classes from '../scss/Board.module.scss';
-import { useGameStore } from '../store/store';
-import HexagonLine from './HexagonLine';
+import { useGameStore } from '@/store/store';
+
+import HexagonLine from '../HexagonLine';
+import styles from './styles.module.scss';
 
 const Board = () => {
   const circles = useGameStore((state) => state.circles);
   const moving = useGameStore((state) => state.moving);
 
   return (
-    <div className={classes.board}>
+    <div className={styles.board}>
       <HexagonLine
         circles={circles.filter((circle) => circle.coords.line === 1)}
         hexNumber={5}

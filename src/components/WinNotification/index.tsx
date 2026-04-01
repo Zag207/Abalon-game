@@ -1,5 +1,6 @@
-import classes from '../scss/WinNotification.module.scss';
-import { CircleTypeEnum } from '../types/CircleTypes';
+import { CircleTypeEnum } from '@/types/CircleTypes';
+
+import styles from './styles.module.scss';
 
 interface WinNotificationProps {
   winnerTeam: CircleTypeEnum
@@ -10,16 +11,16 @@ const WinNotification = ({ winnerTeam }: WinNotificationProps) => {
 
   switch (winnerTeam) {
     case CircleTypeEnum.Black:
-      teamClass = classes.black;
+      teamClass = styles.black;
       break;
     case CircleTypeEnum.White:
-      teamClass = classes.white;
+      teamClass = styles.white;
       break;
   }
 
   return (
-    <div className={classes.winNotificationContainer}>
-      <div className={classes.winNotificationContent}>
+    <div className={styles.winNotificationContainer}>
+      <div className={styles.winNotificationContent}>
         Win <span className={teamClass}> {winnerTeam === CircleTypeEnum.Black ? 'Black' : 'White'}</span>
       </div>
     </div>

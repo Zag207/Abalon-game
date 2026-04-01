@@ -1,8 +1,8 @@
-import type { CircleType } from '../types/CircleTypes';
-import type { MovingDirections } from '../types/MovingTypes';
+import type { CircleType } from '../../types/CircleTypes';
+import type { MovingDirections } from '../../types/MovingTypes';
 
-import classes from '../scss/HexagonLine.module.scss';
-import Hexagon from './Hexagon';
+import Hexagon from '../Hexagon';
+import styles from './styles.module.scss';
 
 interface HexagonLineProps {
   circles: CircleType[],
@@ -18,7 +18,7 @@ const HexagonLine = ({ circles, moving, startDiagonal, hexNumber }: HexagonLineP
   );
 
   return (
-    <div className={classes.hexagonLine}>
+    <div className={styles.hexagonLine}>
       {circlesSortedExtended.map((circle, i) => (
         <Hexagon key={i} circle={circle} moving={moving} />
       ))}

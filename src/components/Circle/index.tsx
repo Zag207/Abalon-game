@@ -1,9 +1,10 @@
-import type { CircleType } from '../types/CircleTypes';
+import type { CircleType } from '@/types/CircleTypes';
 
-import classes from '../scss/Circle.module.scss';
-import { useGameStore } from '../store/store';
-import { CircleTypeEnum } from '../types/CircleTypes';
-import { MovingDirections } from '../types/MovingTypes';
+import { useGameStore } from '@/store/store';
+import { CircleTypeEnum } from '@/types/CircleTypes';
+import { MovingDirections } from '@/types/MovingTypes';
+
+import styles from './styles.module.scss';
 
 interface CircleProps extends CircleType {
   moving: MovingDirections,
@@ -11,7 +12,7 @@ interface CircleProps extends CircleType {
 
 // Не применяется класс movingRight при нажатии на кнопку, а сами анимации работают
 const Circle = ({ id, type, isChecked, moving, isMoving }: CircleProps) => {
-  let cssClass = classes.circle;
+  let cssClass = styles.circle;
 
   const currentTeam = useGameStore((state) => state.team);
   const isError = useGameStore((state) => state.isErrorMove);
@@ -32,12 +33,12 @@ const Circle = ({ id, type, isChecked, moving, isMoving }: CircleProps) => {
     setIsChecked(id, false);
   };
   const clearError = () => {
-    const indexError = cssClass.indexOf(` ${classes.circleError}`);
+    const indexError = cssClass.indexOf(` ${styles.circleError}`);
 
     if (indexError > -1)
     {
-      const left = cssClass.slice(indexError, indexError + ` ${classes.circleError}`.length);
-      const right = cssClass.slice(indexError + ` ${classes.circleError}`.length);
+      const left = cssClass.slice(indexError, indexError + ` ${styles.circleError}`.length);
+      const right = cssClass.slice(indexError + ` ${styles.circleError}`.length);
 
       cssClass = left + right;
       setIsError(false);
@@ -49,16 +50,16 @@ const Circle = ({ id, type, isChecked, moving, isMoving }: CircleProps) => {
     switch (type)
     {
       case CircleTypeEnum.Black:
-        cssClass += ` ${classes.circleBlack}`;
+        cssClass += ` ${styles.circleBlack}`;
         break;
       case CircleTypeEnum.White:
-        cssClass += ` ${classes.circleWhite}`;
+        cssClass += ` ${styles.circleWhite}`;
         break;
     }
   }
   else
   {
-    cssClass += ` ${classes.circleChecked}`;
+    cssClass += ` ${styles.circleChecked}`;
   }
 
   if (isMoving)
@@ -67,22 +68,22 @@ const Circle = ({ id, type, isChecked, moving, isMoving }: CircleProps) => {
 
     switch (moving) {
       case MovingDirections.UpRight:
-        cssClass += ` ${classes.movingUpRight}`;
+        cssClass += ` ${styles.movingUpRight}`;
         break;
       case MovingDirections.Right:
-        cssClass += ` ${classes.movingRight}`;
+        cssClass += ` ${styles.movingRight}`;
         break;
       case MovingDirections.DownRight:
-        cssClass += ` ${classes.movingDownRight}`;
+        cssClass += ` ${styles.movingDownRight}`;
         break;
       case MovingDirections.DownLeft:
-        cssClass += ` ${classes.movingDownLeft}`;
+        cssClass += ` ${styles.movingDownLeft}`;
         break;
       case MovingDirections.Left:
-        cssClass += ` ${classes.movingLeft}`;
+        cssClass += ` ${styles.movingLeft}`;
         break;
       case MovingDirections.UpLeft:
-        cssClass += ` ${classes.movingUpLeft}`;
+        cssClass += ` ${styles.movingUpLeft}`;
         break;
       default:
         break;
@@ -90,7 +91,7 @@ const Circle = ({ id, type, isChecked, moving, isMoving }: CircleProps) => {
   }
 
   if (isError && isChecked)
-    cssClass += ` ${classes.circleError}`;
+    cssClass += ` ${styles.circleError}`;
 
   return (
     <div
