@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 
+import type DiagonalLimits from '@/game/types/DiagonalLimits';
+
+import movingMap from '@/game/types/movingMap';
+
 import type { CircleCoordinates, CircleType } from './types/CircleTypes';
 
 import Board from './components/Board';
@@ -15,14 +19,6 @@ import { MovingDirections, MovingTypes } from './types/MovingTypes';
 const App = () => {
   const circles = useGameStore((state) => state.circles);
   const team = useGameStore((state) => state.team);
-  const movingMap: Map<number, MovingDirections> = new Map([
-    [1, MovingDirections.UpRight],
-    [2, MovingDirections.Right],
-    [3, MovingDirections.DownRight],
-    [4, MovingDirections.DownLeft],
-    [5, MovingDirections.Left],
-    [6, MovingDirections.UpLeft]
-  ]);
 
   const getWinnerTeam = useGameStore((state) => state.getWinnerTeam);
   const getIsWin = useGameStore((state) => state.isWin);
@@ -104,17 +100,12 @@ const App = () => {
 
     return res;
   };
-  interface DiagonalLimits {
-    diagonalEnd: number
-    diagonalStart: number,
-  }
-
-  const isHexEmpty = (coords: CircleCoordinates): boolean => !circles.some(
-    (circle) => circle.coords.line === coords.line && circle.coords.diagonal === coords.diagonal
-  );
   const getDistance = (coords1: CircleCoordinates, coords2: CircleCoordinates): number => Math.max(
     Math.abs(coords1.diagonal - coords2.diagonal),
     Math.abs(coords1.line - coords2.line)
+  );
+  const isHexEmpty = (coords: CircleCoordinates): boolean => !circles.some(
+    (circle) => circle.coords.line === coords.line && circle.coords.diagonal === coords.diagonal
   );
   const checkForParall = (circlesChecked: CircleType[], moving: MovingDirections): boolean => {
     const line = circlesChecked[0].coords.line;
